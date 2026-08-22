@@ -25,8 +25,17 @@ After every run it measures per-field fill rate, schema conformance and row yiel
 against a rolling baseline. When those numbers drift, it **composes the repair prompt
 itself from the evidence it just gathered** and drives Bright Data's self-healing loop:
 
-```
-observe → measure → diagnose → compose prompt → heal → approve → verify
+```mermaid
+flowchart LR
+    O[observe] --> M[measure vitals]
+    M --> D{drift?}
+    D -->|no| O
+    D -->|yes, with evidence| P[compose prompt<br/>from telemetry]
+    P --> H[bdata scraper heal]
+    H --> A[approve]
+    A --> V[verify run]
+    V -->|score recorded| O
+    D -->|degraded, no cause| W[wait for a human]
 ```
 
 The last step matters most: the verification run's score is recorded next to the score
@@ -53,10 +62,15 @@ That is a verbatim prompt Spinneret generated and dispatched — see the heal le
 Both collectors were built with Scraper Studio through `npx -p @brightdata/cli` and are
 real, runnable IDs.
 
-| Collector | ID | Target | Role |
+| Collector | ID | Target | Signal |
 |---|---|---|---|
-| `funded-startups` | `c_mt4e1as4160iqj53as` | YC company directory, Summer 2025 batch | New-entrant discovery |
-| `hiring-signals` | `c_mt4dzl5v15c84o86sa` | WeWorkRemotely GTM job board | Hiring-intent signal |
+| `hiring-signals` | `c_mt4dzl5v15c84o86sa` | WeWorkRemotely GTM job board | Hiring intent — revenue roles opening |
+| `funded-startups` | `c_mt4e1as4160iqj53as` | YC directory, Summer 2025 batch | New entrants, scored on sector fit |
+| `product-velocity` | `c_mt4fj43j1tvgzr9bs2` | Linear changelog | Product velocity, enterprise-readiness work |
+
+Three deliberately different shapes: a paginated job board, a JS-rendered directory,
+and a single-subject changelog. They exercise different parts of the health model —
+the changelog has no company field at all, so the collector names its subject instead.
 
 **Target selection.** Every target is public, carries no personal data, sits behind no
 login or paywall, and has no pre-built Bright Data scraper — the conditions the brief sets.
@@ -127,8 +141,28 @@ npm run spinneret -- heal hiring-signals      # compose prompt from telemetry, d
 npm run spinneret -- approve hiring-signals 1 # approve, re-run, record before/after
 npm run spinneret -- cycle hiring-signals     # the whole loop, unattended
 npm run spinneret -- status                   # fleet + heal ledger
-npm test                                      # 33 unit tests over core/
+npm test                                      # 44 unit tests over core/
 ```
+
+### Running it on a schedule
+
+```bash
+npm run watch                              # default: every 30 minutes
+SPINNERET_CRON="*/10 * * * *" npm run watch # or set your own
+```
+
+This is the **schedule** downstream integration: the Collector IDs are consumed by a
+long-running supervisor rather than a one-off script. Each sweep observes every
+collector, staggers the runs so a tick does not burst against rate limits, and heals
+only where the evidence justifies it.
+
+Two safeguards matter for unattended operation:
+
+- **A late tick is skipped, not queued.** A sweep can outlast its own interval on a slow
+  heal, and overlapping runs would corrupt the baseline.
+- **A failed heal is not retried on a timer** (`src/core/cooldown.ts`). Re-sending a prompt
+  already shown not to work burns credits and can degrade the scraper further. Leaving a
+  collector visibly broken for a human is the better failure mode.
 
 `cycle` is the unattended path: it observes, and heals **only if the evidence justifies it**.
 A collector that is merely degraded with no identified cause is left alone deliberately —
@@ -162,13 +196,22 @@ what the scraper currently does. That is what lets the sentinel notice a gap nob
 Intent is a sum of stated rules, never a black box — every point traces to a reason shown
 in the UI, because a sales team will not act on a score they cannot argue with.
 
-| Rule | Points | Reasoning |
-|---|---|---|
-| GTM leadership hire | 34 | New leaders re-tool their stack within a quarter |
-| RevOps hire | 32 | An explicit mandate to buy and integrate tooling |
-| Revenue-carrying role | 30 | Quota capacity is being added |
-| Newly appeared | 22 | The change is fresh, not historical |
-| Concurrent openings | up to 27 | Coordinated build-out rather than backfill |
+Each source kind gets its own rule table, because a job title, a changelog entry and a
+directory listing say different things about intent.
+
+| Source | Rule | Points | Reasoning |
+|---|---|---|---|
+| hiring | GTM leadership hire | 34 | New leaders re-tool their stack within a quarter |
+| hiring | RevOps hire | 32 | An explicit mandate to buy and integrate tooling |
+| hiring | Revenue-carrying role | 30 | Quota capacity is being added |
+| changelog | Enterprise readiness (SSO, SCIM, audit logs) | 34 | Moving upmarket, larger deals ahead |
+| changelog | Integration surface | 26 | Building an ecosystem play |
+| directory | B2B software | 24 | Buys tooling as a matter of course |
+| any | Newly appeared | 22 | The change is fresh, not historical |
+| any | Concurrent activity | up to 27 | Coordinated build-out rather than backfill |
+
+When no rule fires, **no signal is emitted** — Spinneret never invents intent it cannot
+justify. There is a test for exactly that.
 
 ---
 
