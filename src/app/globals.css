@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/**
+ * Spinneret design tokens.
+ *
+ * The palette is built around a single idea: silk against dark. Amber is the
+ * thread the system spins, and the vitals ramp (emerald to amber to red) is the
+ * only other place colour is allowed to appear — so any colour on screen means
+ * something about health, and never merely decoration.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-void: #06070a;
+  --color-surface: #0c0e14;
+  --color-surface-2: #11141c;
+  --color-line: #1b1f2a;
+  --color-line-bright: #2a3040;
+
+  --color-silk: #f0b429;
+  --color-silk-dim: #7a5a14;
+
+  --color-vital-good: #34d399;
+  --color-vital-warn: #fbbf24;
+  --color-vital-bad: #f87171;
+  --color-vital-dead: #64748b;
+
+  --color-ink: #e8eaf0;
+  --color-ink-muted: #8b93a7;
+  --color-ink-faint: #5a6178;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--color-void);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* The faint radial weave behind the whole page — a web, not a grid. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(240, 180, 41, 0.06), transparent 55%),
+    repeating-conic-gradient(
+      from 0deg at 50% 40%,
+      rgba(255, 255, 255, 0.022) 0deg 0.35deg,
+      transparent 0.35deg 22.5deg
+    );
 }
+
+/* Vitals pulse: the rate encodes urgency, so a failing node reads at a glance. */
+@keyframes vital-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(1.35); }
+}
+/* SVG elements transform about the viewport origin by default, which would
+   fling a scaling halo away from its node. fill-box re-anchors it to the shape. */
+.pulse-good,
+.pulse-warn,
+.pulse-bad {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.pulse-good { animation: vital-pulse 2.6s ease-in-out infinite; }
+.pulse-warn { animation: vital-pulse 1.4s ease-in-out infinite; }
+.pulse-bad  { animation: vital-pulse 0.7s ease-in-out infinite; }
+
+/* Silk shimmer travelling along a healed thread. */
+@keyframes thread-travel {
+  from { stroke-dashoffset: 260; }
+  to   { stroke-dashoffset: 0; }
+}
+.thread-travel {
+  stroke-dasharray: 5 14;
+  animation: thread-travel 3.5s linear infinite;
+}
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-rise { animation: fade-rise 0.35s ease-out both; }
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-bright);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-silk-dim); }

@@ -1,69 +1,218 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useCallback, useMemo, useState } from "react";
+import { Console } from "@/components/Console";
+import { HealLedger } from "@/components/HealLedger";
+import { SignalBoard } from "@/components/SignalBoard";
+import { VitalCard } from "@/components/VitalCard";
+import { WebCanvas } from "@/components/WebCanvas";
+import { useFleetStream } from "@/hooks/useFleetStream";
+import { TONE_HEX, vitalTone } from "@/lib/format";
+
+type Tab = "signals" | "heals";
+
+export default function Dashboard() {
+  const { state, connected } = useFleetStream();
+  const [selected, setSelected] = useState<string>();
+  const [tab, setTab] = useState<Tab>("signals");
+  const [busySlug, setBusySlug] = useState<string>();
+
+  /** Fire an action and let the event stream report what happens next. */
+  const dispatch = useCallback(
+    async (path: string, body: Record<string, unknown>) => {
+      setBusySlug(body.slug as string);
+      try {
+        await fetch(`/api/${path}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+      } finally {
+        // Cleared optimistically; the console carries the authoritative progress.
+        setTimeout(() => setBusySlug(undefined), 4000);
+      }
+    },
+    [],
+  );
+
+  const summary = state?.summary;
+  const fleetTone = vitalTone(summary?.fleetHealth ?? 0);
+
+  const filteredSignals = useMemo(() => {
+    if (!state) return [];
+    return selected
+      ? state.signals.filter((signal) => signal.collectorSlug === selected)
+      : state.signals;
+  }, [state, selected]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="relative z-10 mx-auto max-w-[1400px] px-6 py-8">
+      {/* ---------------------------------------------------------------- header */}
+      <header className="flex flex-wrap items-end justify-between gap-6 border-b border-line pb-6">
+        <div>
+          <div className="flex items-center gap-3">
+            <SpinneretMark />
+            <h1 className="text-[26px] font-semibold tracking-tight text-ink">
+              Spinneret
+            </h1>
+            <span className="rounded border border-silk/30 bg-silk/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-silk">
+              self-healing lead radar
+            </span>
+          </div>
+          <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-ink-muted">
+            Watches niche public sources for buying signals, measures its own
+            scrapers after every run, and repairs them from evidence — writing the
+            repair prompt itself, without a human describing what broke.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+
+        <div className="flex items-center gap-6">
+          <Stat label="fleet health" value={`${summary?.fleetHealth ?? 0}`} colour={TONE_HEX[fleetTone]} />
+          <Stat label="signals" value={`${summary?.totalSignals ?? 0}`} />
+          <Stat label="heals verified" value={`${summary?.healsVerified ?? 0}`} />
+          <div className="flex items-center gap-2">
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${
+                connected ? "animate-pulse bg-vital-good" : "bg-vital-bad"
+              }`}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
+              {connected ? "live" : "offline"}
+            </span>
+          </div>
         </div>
-      </main>
+      </header>
+
+      {/* ------------------------------------------------------------------ web */}
+      <section className="mt-8 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
+        <div className="rounded-xl border border-line bg-surface/60 p-2">
+          {state && (
+            <WebCanvas
+              members={state.members}
+              selected={selected}
+              onSelect={(slug) => setSelected(slug === selected ? undefined : slug)}
+            />
+          )}
+        </div>
+
+        <div className="h-[420px]">
+          <Console events={state?.events ?? []} />
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------------- vitals */}
+      <section className="mt-8">
+        <SectionHeading
+          title="Collector vitals"
+          note="every score is measured from the last real run, not asserted"
+        />
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          {state?.members.map((member) => (
+            <VitalCard
+              key={member.collector.slug}
+              member={member}
+              selected={selected === member.collector.slug}
+              busy={busySlug === member.collector.slug}
+              onSelect={() =>
+                setSelected(
+                  member.collector.slug === selected ? undefined : member.collector.slug,
+                )
+              }
+              onObserve={() => dispatch("observe", { slug: member.collector.slug })}
+              onHeal={() => dispatch("heal", { slug: member.collector.slug })}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ----------------------------------------------------- signals / ledger */}
+      <section className="mt-10 pb-16">
+        <div className="flex items-center gap-1 border-b border-line">
+          {(
+            [
+              ["signals", `Buying signals${selected ? " · filtered" : ""}`],
+              ["heals", "Heal ledger"],
+            ] as const
+          ).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setTab(key)}
+              className={`-mb-px border-b-2 px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest transition-colors ${
+                tab === key
+                  ? "border-silk text-silk"
+                  : "border-transparent text-ink-faint hover:text-ink-muted"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-5">
+          {tab === "signals" ? (
+            <SignalBoard signals={filteredSignals} />
+          ) : (
+            <HealLedger
+              heals={state?.heals ?? []}
+              busySlug={busySlug}
+              onApprove={(slug, healId) => dispatch("approve", { slug, healId })}
+            />
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+/* ------------------------------------------------------------------ fragments */
+
+function Stat({ label, value, colour }: { label: string; value: string; colour?: string }) {
+  return (
+    <div className="text-right">
+      <div
+        className="font-mono text-xl font-semibold"
+        style={{ color: colour ?? "var(--color-ink)" }}
+      >
+        {value}
+      </div>
+      <div className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
+        {label}
+      </div>
     </div>
+  );
+}
+
+function SectionHeading({ title, note }: { title: string; note: string }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-3">
+      <h2 className="text-lg font-medium text-ink">{title}</h2>
+      <p className="font-mono text-[11px] text-ink-faint">{note}</p>
+    </div>
+  );
+}
+
+/** Eight radial threads from a hub — the mark is the product's own diagram. */
+function SpinneretMark() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+      {Array.from({ length: 8 }, (_, index) => {
+        const angle = (index / 8) * Math.PI * 2;
+        return (
+          <line
+            key={index}
+            x1={15}
+            y1={15}
+            x2={15 + Math.cos(angle) * 13}
+            y2={15 + Math.sin(angle) * 13}
+            stroke="#f0b429"
+            strokeWidth="1"
+            opacity={0.75}
+          />
+        );
+      })}
+      <circle cx="15" cy="15" r="9" fill="none" stroke="#f0b429" strokeWidth="0.8" opacity="0.5" />
+      <circle cx="15" cy="15" r="4.5" fill="none" stroke="#f0b429" strokeWidth="0.8" opacity="0.8" />
+      <circle cx="15" cy="15" r="2" fill="#f0b429" />
+    </svg>
   );
 }
