@@ -165,7 +165,7 @@ export function CompanyDrawer({ company, signals, onClose }: Props) {
         <footer className="border-t border-line px-6 py-4">
           <p className="font-mono text-[11px] leading-relaxed text-ink-faint">
             Company-level signals only. Derived from public job postings and directory
-            listings — no personal data is collected or scored.
+            listings. No personal data is collected or scored.
           </p>
         </footer>
       </SheetContent>

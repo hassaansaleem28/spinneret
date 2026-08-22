@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -35,13 +36,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Spinneret — Scrapers That Fix Themselves",
+  title: "Spinneret · Scrapers That Fix Themselves",
   description:
     "Spinneret watches niche public sources for the moment a company starts buying, and repairs its own scrapers when those sources change shape.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#06070a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#06070a" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -59,12 +63,14 @@ export default function RootLayout({
         {/* Keyboard users must be able to jump the navbar. */}
         <a
           href="#fleet"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-silk focus:px-4 focus:py-2 focus:font-medium focus:text-[#1a1204]"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-silk focus:px-4 focus:py-2 focus:font-medium focus:text-primary-foreground"
         >
           Skip to Content
         </a>
-        <div className="weave-backdrop" aria-hidden="true" />
-        <TooltipProvider delay={200}>{children}</TooltipProvider>
+        <ThemeProvider>
+          <div className="weave-backdrop" aria-hidden="true" />
+          <TooltipProvider delay={200}>{children}</TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

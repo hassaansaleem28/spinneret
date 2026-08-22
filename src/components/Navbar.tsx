@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity, Menu, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,8 +13,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { TONE_HEX, vitalTone } from "@/lib/format";
+import { TONE_COLOR, vitalTone } from "@/lib/format";
 
 /**
  * Sticky command bar.
@@ -25,9 +27,10 @@ import { TONE_HEX, vitalTone } from "@/lib/format";
  */
 
 const SECTIONS = [
-  { id: "fleet", label: "Fleet" },
-  { id: "signals", label: "Signals" },
-  { id: "ledger", label: "Ledger" },
+  { href: "/#fleet", label: "Fleet" },
+  { href: "/#signals", label: "Signals" },
+  { href: "/#ledger", label: "Ledger" },
+  { href: "/docs", label: "Docs" },
 ] as const;
 
 interface Props {
@@ -52,24 +55,24 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-[1440px] items-center gap-6 px-6"
       >
-        <a href="#fleet" className="flex shrink-0 items-center gap-2.5">
+        <Link href="/#fleet" className="flex shrink-0 items-center gap-2.5">
           <SpinneretMark />
           <span className="font-display text-[22px] leading-none tracking-tight text-ink">
             Spinneret
           </span>
-        </a>
+        </Link>
 
         <Separator orientation="vertical" className="hidden h-5 md:block" />
 
         <ul className="hidden items-center gap-1 md:flex">
           {SECTIONS.map((section) => (
-            <li key={section.id}>
-              <a
-                href={`#${section.id}`}
+            <li key={section.href}>
+              <Link
+                href={section.href}
                 className="rounded-md px-3 py-1.5 text-[13.5px] font-medium text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink"
               >
                 {section.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -83,7 +86,7 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
                   <Activity className="size-3.5 text-ink-faint" aria-hidden="true" />
                   <span
                     className="tabular font-mono text-sm font-semibold"
-                    style={{ color: TONE_HEX[tone] }}
+                    style={{ color: TONE_COLOR[tone] }}
                   >
                     {fleetHealth}
                   </span>
@@ -114,6 +117,8 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
               {connected ? "Live" : "Offline"}
             </span>
           </div>
+
+          <ThemeToggle />
 
           <Button
             size="sm"
@@ -149,14 +154,14 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
 
               <ul className="flex flex-col gap-1 px-4">
                 {SECTIONS.map((section) => (
-                  <li key={section.id}>
-                    <a
-                      href={`#${section.id}`}
+                  <li key={section.href}>
+                    <Link
+                      href={section.href}
                       onClick={() => setMenuOpen(false)}
                       className="block rounded-md px-3 py-2.5 text-[15px] font-medium text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink"
                     >
                       {section.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -167,7 +172,7 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
                 </p>
                 <p
                   className="tabular mt-1 font-mono text-2xl font-semibold"
-                  style={{ color: TONE_HEX[tone] }}
+                  style={{ color: TONE_COLOR[tone] }}
                 >
                   {fleetHealth}
                 </p>

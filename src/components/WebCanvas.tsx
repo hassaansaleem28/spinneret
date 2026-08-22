@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { TONE_HEX, vitalTone } from "@/lib/format";
+import { TONE_COLOR, vitalTone } from "@/lib/format";
 import type { FleetMember } from "@/services/state";
 
 /**
@@ -132,7 +132,7 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
         </radialGradient>
       </defs>
 
-      <g ref={scaffoldRef} stroke="#232838" strokeWidth="0.7" fill="none" opacity="0.7">
+      <g ref={scaffoldRef} stroke="var(--scaffold)" strokeWidth="0.7" fill="none" opacity="0.7">
         {spokes.map((end, index) => (
           <line key={`spoke-${index}`} x1={CENTER_X} y1={CENTER_Y} x2={end.x} y2={end.y} />
         ))}
@@ -146,7 +146,7 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
       <g ref={nodesRef}>
         {placed.map(({ member, point }) => {
           const tone = vitalTone(member.score);
-          const colour = TONE_HEX[tone];
+          const colour = TONE_COLOR[tone];
           const broken = tone === "bad" || tone === "dead";
           const active = selected === member.collector.slug;
 
@@ -182,7 +182,7 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
                 cy={point.y}
                 r={18}
                 fill={colour}
-                opacity={0.15}
+                style={{ opacity: "var(--node-halo)" }}
                 className={`pulse-${tone === "dead" ? "warn" : tone}`}
               />
               <circle

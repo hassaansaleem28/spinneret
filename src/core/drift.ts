@@ -87,7 +87,7 @@ export function detectDrift(
     } else if (missingFields.length === 0 && regressedFields.length > 0) {
       evidence.push(
         `Row count is normal at ${pct(snapshot.yieldRatio)} of baseline, so pagination ` +
-          `and the row selector are intact — the breakage is field-level.`,
+          `and the row selector are intact, so the breakage is field-level.`,
       );
     }
   }

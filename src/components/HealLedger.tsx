@@ -80,7 +80,7 @@ export function HealLedger({ heals, onApprove, busySlug }: Props) {
                   <span className="tabular flex items-center gap-1.5 text-ink-muted">
                     {heal.scoreBefore}
                     <ArrowRight className="size-3 text-ink-faint" aria-hidden="true" />
-                    {heal.scoreAfter ?? "—"}
+                    {heal.scoreAfter ?? "…"}
                   </span>
                   {delta !== undefined && (
                     <span

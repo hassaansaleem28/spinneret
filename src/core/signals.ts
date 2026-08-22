@@ -23,37 +23,37 @@ const FUNCTION_RULES: ScoringRule[] = [
     id: "revenue-role",
     pattern: /\b(account executive|ae|sales engineer|sdr|bdr|revenue|quota)\b/i,
     points: 30,
-    reason: "Revenue-carrying role — GTM motion is being scaled, tooling budget follows",
+    reason: "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
   },
   {
     id: "gtm-leadership",
     pattern: /\b(head of sales|vp sales|cro|vp marketing|cmo|head of growth)\b/i,
     points: 34,
-    reason: "GTM leadership hire — new leaders re-tool their stack within one quarter",
+    reason: "GTM leadership hire, and new leaders re-tool their stack within a quarter",
   },
   {
     id: "demand-gen",
     pattern: /\b(demand gen|growth marketing|lifecycle|performance marketing)\b/i,
     points: 26,
-    reason: "Demand-generation hire — pipeline targets are rising",
+    reason: "Demand-generation hire, which means pipeline targets are rising",
   },
   {
     id: "revops",
     pattern: /\b(revops|revenue operations|sales ops|gtm ops)\b/i,
     points: 32,
-    reason: "RevOps hire — an explicit mandate to buy and integrate GTM tooling",
+    reason: "RevOps hire, an explicit mandate to buy and integrate GTM tooling",
   },
   {
     id: "partnerships",
     pattern: /\b(partnerships|alliances|channel)\b/i,
     points: 20,
-    reason: "Partnerships hire — expanding distribution surface",
+    reason: "Partnerships hire, so the company is expanding its distribution surface",
   },
   {
     id: "customer-success",
     pattern: /\b(customer success|account manager|onboarding specialist)\b/i,
     points: 18,
-    reason: "Post-sale hire — existing customer base is growing enough to need coverage",
+    reason: "Post-sale hire, so the customer base is growing enough to need coverage",
   },
 ];
 
@@ -63,13 +63,13 @@ const SENIORITY_RULES: ScoringRule[] = [
     id: "exec",
     pattern: /\b(chief|vp|vice president|head of|director)\b/i,
     points: 18,
-    reason: "Executive-level opening — budget authority attached",
+    reason: "Executive-level opening, which carries budget authority",
   },
   {
     id: "lead",
     pattern: /\b(lead|principal|staff|senior manager)\b/i,
     points: 10,
-    reason: "Senior opening — team build-out in progress",
+    reason: "Senior opening, so a team build-out is in progress",
   },
 ];
 
@@ -79,7 +79,7 @@ const EXPANSION_RULES: ScoringRule[] = [
     id: "remote-global",
     pattern: /\b(worldwide|global|anywhere|emea|apac)\b/i,
     points: 8,
-    reason: "Geographically open hire — expanding into new markets",
+    reason: "Geographically open hire, so the company is expanding into new markets",
   },
 ];
 
@@ -89,25 +89,25 @@ const CHANGELOG_RULES: ScoringRule[] = [
     id: "enterprise-readiness",
     pattern: /\b(sso|saml|scim|audit log|rbac|compliance|soc ?2|enterprise)\b/i,
     points: 34,
-    reason: "Shipped enterprise-readiness features — moving upmarket, larger deals ahead",
+    reason: "Shipped enterprise-readiness features, so it is moving upmarket toward larger deals",
   },
   {
     id: "integration-surface",
     pattern: /\b(integration|connector|webhook|api|sdk|import|sync)\b/i,
     points: 26,
-    reason: "Expanded integration surface — building an ecosystem play",
+    reason: "Expanded integration surface, which points to an ecosystem play",
   },
   {
     id: "ai-investment",
     pattern: /\b(ai|agent|llm|copilot|model|intelligence)\b/i,
     points: 22,
-    reason: "Investing in AI capability — active budget and roadmap pressure",
+    reason: "Investing in AI capability, which means active budget and roadmap pressure",
   },
   {
     id: "scale-work",
     pattern: /\b(performance|scale|latency|throughput|bulk)\b/i,
     points: 16,
-    reason: "Scaling work shipped — usage is growing faster than the current system",
+    reason: "Scaling work shipped, so usage is growing faster than the current system",
   },
 ];
 
@@ -117,25 +117,25 @@ const SECTOR_RULES: ScoringRule[] = [
     id: "b2b-saas",
     pattern: /\b(b2b|saas|platform|infrastructure|developer|api)\b/i,
     points: 24,
-    reason: "B2B software company — buys tooling as a matter of course",
+    reason: "B2B software company, which buys tooling as a matter of course",
   },
   {
     id: "ai-native",
     pattern: /\b(ai|agent|llm|machine learning|automation)\b/i,
     points: 20,
-    reason: "AI-native company — typically well funded and fast to adopt new tooling",
+    reason: "AI-native company, typically well funded and quick to adopt new tooling",
   },
   {
     id: "gtm-adjacent",
     pattern: /\b(sales|marketing|crm|revenue|customer|support)\b/i,
     points: 18,
-    reason: "Operates in the GTM space — understands and buys this category",
+    reason: "Operates in the GTM space, so it understands and buys this category",
   },
   {
     id: "fintech-health",
     pattern: /\b(fintech|health|insurance|legal|compliance)\b/i,
     points: 14,
-    reason: "Regulated vertical — higher willingness to pay for reliability",
+    reason: "Regulated vertical, with a higher willingness to pay for reliability",
   },
 ];
 
@@ -291,8 +291,8 @@ export function deriveSignals(
       intent += NEW_ENTRANT_POINTS;
       rationale.push(
         previouslySeen.size === 0
-          ? "First observation — establishing baseline for future change detection"
-          : "Newly appeared since the previous run — the change is fresh",
+          ? "First observation, establishing a baseline for future change detection"
+          : "Newly appeared since the previous run, so the change is fresh",
       );
     }
 
@@ -304,8 +304,8 @@ export function deriveSignals(
       intent += bonus;
       rationale.push(
         collector.kind === "hiring"
-          ? `${companyRows.length} concurrent openings — coordinated team build-out, not backfill`
-          : `${companyRows.length} recent entries — sustained shipping velocity`,
+          ? `${companyRows.length} concurrent openings, a coordinated build-out rather than backfill`
+          : `${companyRows.length} recent entries, which shows sustained shipping velocity`,
       );
     }
 

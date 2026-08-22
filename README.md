@@ -106,6 +106,11 @@ src/
 └─ components/    dashboard
 ```
 
+The interface is built on shadcn/ui with a three-font pairing (Instrument Serif for
+display, Archivo for interface text, JetBrains Mono for telemetry), GSAP for the web
+scaffold animation and Framer Motion for staggered reveals. Light and dark themes are
+both supported; the vitals ramp darkens in light mode to hold a 4.5:1 contrast ratio.
+
 The layering is strict and load-bearing: `core/` imports nothing from `db/`, `adapters/`
 or `app/`. That is what lets the self-healing decision logic — the part that most needs to
 be provable — be tested without a database, a network, or a Bright Data account.
@@ -127,6 +132,11 @@ cp .env.example .env.local        # then paste your token into .env.local
 npm run spinneret -- seed         # register the collectors
 npm run dev                       # dashboard on http://localhost:3000
 ```
+
+**Full documentation lives at `/docs`** once the app is running. It covers the healing
+loop, the scoring arithmetic, the drift thresholds and the reasoning behind each
+decision, with interactive diagrams for the loop, the health formula and the anatomy of
+a real dispatched heal prompt.
 
 `.env.local` is gitignored. Keep your token out of commits and out of any demo recording.
 

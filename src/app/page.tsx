@@ -9,10 +9,9 @@ import { Navbar } from "@/components/Navbar";
 import { SignalBoard } from "@/components/SignalBoard";
 import { VitalCard } from "@/components/VitalCard";
 import { WebCanvas } from "@/components/WebCanvas";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFleetStream } from "@/hooks/useFleetStream";
-import { TONE_HEX, vitalTone } from "@/lib/format";
+import { TONE_COLOR, vitalTone } from "@/lib/format";
 
 /** Staggered entrance — one orchestrated page load rather than scattered fades. */
 const container = {
@@ -83,13 +82,11 @@ export default function Dashboard() {
           className="grid gap-10 pt-16 pb-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
         >
           <div>
-            <motion.div variants={rise}>
-              <Badge
-                variant="outline"
-                className="border-silk/30 bg-silk/10 font-mono text-[10px] uppercase tracking-[0.2em] text-silk"
-              >
+            <motion.div variants={rise} className="flex items-center gap-3">
+              <span className="h-px w-8 bg-silk" aria-hidden="true" />
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-silk">
                 Self-Healing Lead Intelligence
-              </Badge>
+              </span>
             </motion.div>
 
             <motion.h1
@@ -103,30 +100,30 @@ export default function Dashboard() {
 
             <motion.p
               variants={rise}
-              className="mt-6 max-w-[62ch] text-[16.5px] leading-[1.65] text-ink-muted"
+              className="mt-6 max-w-[54ch] text-[15px] leading-[1.7] text-ink-muted"
             >
-              A company is not a lead because it exists in a directory. It is a lead
-              because something just changed — five revenue roles opened this week, a
-              changelog shipped SSO, a new name appeared in a funding batch. Spinneret
-              watches niche public sources for exactly those moments.
+              A company sitting in a directory is not a lead. A company that opened
+              five revenue roles this week is. Spinneret watches job boards, startup
+              directories and competitor changelogs for the small changes that mean
+              budget just moved.
             </motion.p>
 
             <motion.p
               variants={rise}
-              className="mt-4 max-w-[62ch] text-[16.5px] leading-[1.65] text-ink-muted"
+              className="mt-4 max-w-[54ch] text-[15px] leading-[1.7] text-ink-muted"
             >
-              The hard part is that those sources keep changing shape. A redesign
-              lands, a selector stops matching, and most pipelines carry on returning
-              rows that are quietly empty. Spinneret measures every run, notices the
-              drift, <span className="text-ink">writes its own repair prompt</span>,
-              and then proves the fix worked.
+              The catch is that those sources keep changing shape. A redesign lands, a
+              selector stops matching, and most pipelines carry on returning rows that
+              are quietly empty. Spinneret measures every run, spots the drift,{" "}
+              <span className="font-medium text-ink">writes its own repair prompt</span>,
+              then proves the fix worked.
             </motion.p>
 
             <motion.dl variants={rise} className="mt-9 flex flex-wrap gap-x-10 gap-y-5">
               <Stat
                 value={String(fleetHealth)}
                 label="Fleet Health"
-                colour={TONE_HEX[vitalTone(fleetHealth)]}
+                colour={TONE_COLOR[vitalTone(fleetHealth)]}
               />
               <Stat value={String(summary?.totalSignals ?? 0)} label="Signals Tracked" />
               <Stat value={String(summary?.healsVerified ?? 0)} label="Heals Verified" />
@@ -149,7 +146,7 @@ export default function Dashboard() {
         <Section
           id="fleet"
           title="Collector Vitals"
-          note="Every score is measured from the last real run — never asserted."
+          note="Every score is measured from the last real run, never asserted."
         >
           <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
             <div className="grid min-w-0 gap-4 md:grid-cols-2">
@@ -196,7 +193,7 @@ export default function Dashboard() {
             <TabsContent value={filter} className="mt-5">
               {selected && (
                 <p className="mb-3 font-mono text-[11px] text-ink-faint">
-                  Filtered to {selected} —{" "}
+                  Filtered to {selected}.{" "}
                   <button
                     onClick={() => setSelected(undefined)}
                     className="text-silk underline underline-offset-4"

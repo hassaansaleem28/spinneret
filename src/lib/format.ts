@@ -10,11 +10,19 @@ export function vitalTone(score: number): "good" | "warn" | "bad" | "dead" {
   return "bad";
 }
 
-export const TONE_HEX: Record<ReturnType<typeof vitalTone>, string> = {
-  good: "#34d399",
-  warn: "#fbbf24",
-  bad: "#f87171",
-  dead: "#64748b",
+/**
+ * Vitals colours as CSS variables rather than literals.
+ *
+ * These are read into inline styles and SVG fills, so hard-coded hex would pin
+ * the ramp to one theme. Resolving through custom properties lets the same call
+ * site render the darker light-mode ramp without any component knowing a theme
+ * exists.
+ */
+export const TONE_COLOR: Record<ReturnType<typeof vitalTone>, string> = {
+  good: "var(--vital-good)",
+  warn: "var(--vital-warn)",
+  bad: "var(--vital-bad)",
+  dead: "var(--vital-dead)",
 };
 
 export function severityLabel(severity: string): string {

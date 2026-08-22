@@ -1,6 +1,6 @@
 "use client";
 
-import { TONE_HEX, vitalTone } from "@/lib/format";
+import { TONE_COLOR, vitalTone } from "@/lib/format";
 
 /**
  * Health score over recent runs.
@@ -45,7 +45,7 @@ export function Sparkline({ history, width = 150, height = 34 }: Props) {
 
   const latest = history[history.length - 1];
   const tone = vitalTone(latest);
-  const colour = TONE_HEX[tone];
+  const colour = TONE_COLOR[tone];
 
   // Any run that recovered by a wide margin is worth marking — it is where a
   // heal landed.
@@ -72,7 +72,7 @@ export function Sparkline({ history, width = 150, height = 34 }: Props) {
           cy={toY(history[recoveryIndex])}
           r="4.5"
           fill="none"
-          stroke="#f0b429"
+          stroke="var(--silk)"
           strokeWidth="1.3"
         />
       )}

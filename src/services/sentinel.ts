@@ -110,7 +110,7 @@ export interface HealResult {
 export async function heal(collector: Collector): Promise<HealResult> {
   const latest = repo.latestHealth(collector.slug);
   if (!latest) {
-    throw new Error(`No health snapshot for ${collector.slug} — run observe() first.`);
+    throw new Error(`No health snapshot for ${collector.slug}. Run observe() first.`);
   }
 
   const verdict = detectDrift(latest, undefined);
@@ -162,7 +162,7 @@ export async function heal(collector: Collector): Promise<HealResult> {
   repo.logEvent(
     dispatched ? "heal" : "warn",
     dispatched
-      ? `Heal dispatched for ${collector.collectorId} — status ${status}`
+      ? `Heal dispatched for ${collector.collectorId}, status ${status}`
       : `Heal dispatch failed: ${result.stderr.trim().slice(0, 200)}`,
     collector.slug,
   );
@@ -215,7 +215,7 @@ export async function approveAndVerify(
   repo.logEvent(
     improved ? "ok" : "warn",
     improved
-      ? `Heal verified — health recovered ${before} to ${after}/100`
+      ? `Heal verified. Health recovered from ${before} to ${after}/100`
       : `Heal did not improve health (${before} to ${after}/100)`,
     collector.slug,
   );

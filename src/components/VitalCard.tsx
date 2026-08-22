@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { pct, relativeTime, severityLabel, TONE_HEX, vitalTone } from "@/lib/format";
+import { pct, relativeTime, severityLabel, TONE_COLOR, vitalTone } from "@/lib/format";
 import type { FleetMember } from "@/services/state";
 
 /**
@@ -30,7 +30,7 @@ interface Props {
 
 export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal }: Props) {
   const tone = vitalTone(member.score);
-  const colour = TONE_HEX[tone];
+  const colour = TONE_COLOR[tone];
   const needsHeal = member.severity !== "healthy" && member.severity !== "unknown";
 
   return (
@@ -113,13 +113,13 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
                 style={{
                   transformOrigin: "left",
                   width: `${Math.max(field.fillRate * 100, field.absent ? 0 : 2)}%`,
-                  background: field.absent ? TONE_HEX.bad : colour,
+                  background: field.absent ? TONE_COLOR.bad : colour,
                 }}
               />
             </span>
             <span
               className="tabular w-[52px] shrink-0 text-right font-mono text-[11px]"
-              style={{ color: field.absent ? TONE_HEX.bad : "var(--ink-muted)" }}
+              style={{ color: field.absent ? TONE_COLOR.bad : "var(--ink-muted)" }}
             >
               {field.absent ? "absent" : pct(field.fillRate)}
             </span>
@@ -180,7 +180,7 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
             <TooltipContent>
               {needsHeal
                 ? "Compose a repair prompt from this collector's telemetry"
-                : "Nothing to repair — this collector is meeting its contract"}
+                : "Nothing to repair. This collector is meeting its contract"}
             </TooltipContent>
           </Tooltip>
         </div>

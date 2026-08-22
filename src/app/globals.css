@@ -19,10 +19,43 @@
 
 /* ------------------------------------------------------------------ palette */
 
+/**
+ * Light is a warm paper ground rather than plain white: the product is an
+ * instrument, and a sheet of pure #fff under a silk-amber accent reads as a
+ * generic admin panel. The vitals ramp darkens in light mode because emerald at
+ * #34d399 fails 4.5:1 against a pale background, and these three colours are the
+ * ones a user has to read a decision from.
+ */
 :root {
-  color-scheme: dark;
+  --void: #f7f5f0;
+  --surface: #fffefb;
+  --surface-2: #f2efe8;
+  --surface-3: #e9e5db;
+  --line: #e0dbd0;
+  --line-bright: #cdc6b8;
 
-  /* Ground */
+  --silk: #a86a0c;
+  --silk-soft: #c98a1e;
+  --silk-dim: #e6d2a8;
+
+  --vital-good: #0d7d54;
+  --vital-warn: #a35c07;
+  --vital-bad: #c0322b;
+  --vital-dead: #6b7280;
+
+  --ink: #1b1a17;
+  --ink-muted: #57544d;
+  --ink-faint: #858075;
+
+  --weave-line: rgba(0, 0, 0, 0.035);
+  --weave-glow: rgba(168, 106, 12, 0.07);
+  --weave-glow-2: rgba(13, 125, 84, 0.05);
+  --grain-opacity: 0.05;
+  --node-halo: 0.2;
+  --scaffold: #cfc8ba;
+}
+
+.dark {
   --void: #06070a;
   --surface: #0b0d13;
   --surface-2: #101319;
@@ -30,32 +63,39 @@
   --line: #1c202b;
   --line-bright: #2b3140;
 
-  /* Accent — the silk thread */
   --silk: #f0b429;
   --silk-soft: #f8d57e;
   --silk-dim: #7a5a14;
 
-  /* Vitals ramp — reserved exclusively for health semantics */
   --vital-good: #34d399;
   --vital-warn: #fbbf24;
   --vital-bad: #f87171;
   --vital-dead: #64748b;
 
-  /* Ink */
   --ink: #eceef4;
   --ink-muted: #949cb0;
   --ink-faint: #626a80;
 
-  /* shadcn semantic tokens, mapped onto the palette above so its components
-     inherit the design rather than sitting on top of it. */
+  --weave-line: rgba(255, 255, 255, 0.02);
+  --weave-glow: rgba(240, 180, 41, 0.07);
+  --weave-glow-2: rgba(52, 211, 153, 0.035);
+  --grain-opacity: 0.16;
+  --node-halo: 0.15;
+  --scaffold: #232838;
+}
+
+/* shadcn semantic tokens, mapped onto whichever palette is active so its
+   components inherit the design rather than sitting on top of it. */
+:root,
+.dark {
   --background: var(--void);
   --foreground: var(--ink);
   --card: var(--surface);
   --card-foreground: var(--ink);
-  --popover: var(--surface-2);
+  --popover: var(--surface);
   --popover-foreground: var(--ink);
   --primary: var(--silk);
-  --primary-foreground: #1a1204;
+  --primary-foreground: #fffdf7;
   --secondary: var(--surface-3);
   --secondary-foreground: var(--ink);
   --muted: var(--surface-2);
@@ -68,6 +108,12 @@
   --ring: var(--silk);
 
   --radius: 0.7rem;
+}
+
+.dark {
+  color-scheme: dark;
+  /* Amber is light enough in dark mode that button text must go dark. */
+  --primary-foreground: #1a1204;
 }
 
 @theme inline {
@@ -123,6 +169,7 @@
 /* -------------------------------------------------------------- base layer */
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
   /* Anchored headings must clear the sticky navbar. */
   scroll-padding-top: 5.5rem;
@@ -171,11 +218,11 @@ p {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(240, 180, 41, 0.07), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 50% 105%, rgba(52, 211, 153, 0.035), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--weave-glow), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 105%, var(--weave-glow-2), transparent 70%),
     repeating-conic-gradient(
       from 0deg at 50% 32%,
-      rgba(255, 255, 255, 0.02) 0deg 0.3deg,
+      var(--weave-line) 0deg 0.3deg,
       transparent 0.3deg 20deg
     );
 }
@@ -185,7 +232,7 @@ p {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.16;
+  opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
 }
 

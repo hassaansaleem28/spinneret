@@ -43,7 +43,7 @@ export async function superviseOne(collector: Collector): Promise<TickOutcome> {
   if (isInCooldown(lastHealFor(collector.slug))) {
     repo.logEvent(
       "info",
-      "Drift detected but a recent heal is still within cooldown — leaving it for review",
+      "Drift detected, but a recent heal is still within cooldown, so leaving it for review",
       collector.slug,
     );
     return { ...base, healed: false, skippedReason: "cooldown" };
@@ -86,7 +86,7 @@ export async function tick(collectors: Collector[] = COLLECTORS): Promise<TickOu
   const repaired = outcomes.filter((outcome) => outcome.healed).length;
   repo.logEvent(
     "ok",
-    `Sweep complete — ${outcomes.length} observed, ${repaired} repaired`,
+    `Sweep complete. ${outcomes.length} observed, ${repaired} repaired`,
   );
   return outcomes;
 }
