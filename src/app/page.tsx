@@ -1,226 +1,283 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { CompanyDrawer } from "@/components/CompanyDrawer";
 import { Console } from "@/components/Console";
 import { HealLedger } from "@/components/HealLedger";
+import { Navbar } from "@/components/Navbar";
 import { SignalBoard } from "@/components/SignalBoard";
 import { VitalCard } from "@/components/VitalCard";
 import { WebCanvas } from "@/components/WebCanvas";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFleetStream } from "@/hooks/useFleetStream";
 import { TONE_HEX, vitalTone } from "@/lib/format";
 
-type Tab = "signals" | "heals";
+/** Staggered entrance — one orchestrated page load rather than scattered fades. */
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+};
+
+const rise = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+} as const;
+
+type SignalFilter = "all" | "hiring" | "directory" | "changelog";
 
 export default function Dashboard() {
   const { state, connected } = useFleetStream();
   const [selected, setSelected] = useState<string>();
-  const [tab, setTab] = useState<Tab>("signals");
-  const [busySlug, setBusySlug] = useState<string>();
   const [openCompany, setOpenCompany] = useState<string>();
+  const [busySlug, setBusySlug] = useState<string>();
+  const [sweeping, setSweeping] = useState(false);
+  const [filter, setFilter] = useState<SignalFilter>("all");
 
-  /** Fire an action and let the event stream report what happens next. */
-  const dispatch = useCallback(
-    async (path: string, body: Record<string, unknown>) => {
-      setBusySlug(body.slug as string);
-      try {
-        await fetch(`/api/${path}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-      } finally {
-        // Cleared optimistically; the console carries the authoritative progress.
-        setTimeout(() => setBusySlug(undefined), 4000);
-      }
-    },
-    [],
-  );
+  /** Fire an action; the event stream carries the authoritative progress. */
+  const dispatch = useCallback(async (path: string, body?: Record<string, unknown>) => {
+    if (body?.slug) setBusySlug(body.slug as string);
+    try {
+      await fetch(`/api/${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: body ? JSON.stringify(body) : undefined,
+      });
+    } finally {
+      setTimeout(() => setBusySlug(undefined), 4000);
+    }
+  }, []);
+
+  const onSweep = useCallback(async () => {
+    setSweeping(true);
+    await dispatch("sweep");
+    setTimeout(() => setSweeping(false), 6000);
+  }, [dispatch]);
 
   const summary = state?.summary;
-  const fleetTone = vitalTone(summary?.fleetHealth ?? 0);
+  const fleetHealth = summary?.fleetHealth ?? 0;
 
-  const filteredSignals = useMemo(() => {
+  const visibleSignals = useMemo(() => {
     if (!state) return [];
-    return selected
-      ? state.signals.filter((signal) => signal.collectorSlug === selected)
-      : state.signals;
-  }, [state, selected]);
+    return state.signals
+      .filter((signal) => (selected ? signal.collectorSlug === selected : true))
+      .filter((signal) => (filter === "all" ? true : signal.kind === filter));
+  }, [state, selected, filter]);
 
   return (
-    <main className="relative z-10 mx-auto max-w-[1400px] px-6 py-8">
-      {/* ---------------------------------------------------------------- header */}
-      <header className="flex flex-wrap items-end justify-between gap-6 border-b border-line pb-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <SpinneretMark />
-            <h1 className="text-[26px] font-semibold tracking-tight text-ink">
-              Spinneret
-            </h1>
-            <span className="rounded border border-silk/30 bg-silk/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-silk">
-              self-healing lead radar
-            </span>
-          </div>
-          <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-ink-muted">
-            Watches niche public sources for buying signals, measures its own
-            scrapers after every run, and repairs them from evidence — writing the
-            repair prompt itself, without a human describing what broke.
-          </p>
-        </div>
+    <>
+      <Navbar
+        fleetHealth={fleetHealth}
+        connected={connected}
+        sweeping={sweeping}
+        onSweep={onSweep}
+      />
 
-        <div className="flex items-center gap-6">
-          <Stat label="fleet health" value={`${summary?.fleetHealth ?? 0}`} colour={TONE_HEX[fleetTone]} />
-          <Stat label="signals" value={`${summary?.totalSignals ?? 0}`} />
-          <Stat label="heals verified" value={`${summary?.healsVerified ?? 0}`} />
-          <div className="flex items-center gap-2">
-            <span
-              className={`h-1.5 w-1.5 rounded-full ${
-                connected ? "animate-pulse bg-vital-good" : "bg-vital-bad"
-              }`}
-            />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
-              {connected ? "live" : "offline"}
-            </span>
-          </div>
-        </div>
-      </header>
+      <main className="relative z-10 mx-auto max-w-[1440px] px-6 pb-24">
+        {/* ---------------------------------------------------------- hero */}
+        <motion.section
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid gap-10 pt-16 pb-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
+        >
+          <div>
+            <motion.div variants={rise}>
+              <Badge
+                variant="outline"
+                className="border-silk/30 bg-silk/10 font-mono text-[10px] uppercase tracking-[0.2em] text-silk"
+              >
+                Self-Healing Lead Intelligence
+              </Badge>
+            </motion.div>
 
-      {/* ------------------------------------------------------------------ web */}
-      <section className="mt-8 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
-        <div className="rounded-xl border border-line bg-surface/60 p-2">
-          {state && (
-            <WebCanvas
-              members={state.members}
-              selected={selected}
-              onSelect={(slug) => setSelected(slug === selected ? undefined : slug)}
-            />
-          )}
-        </div>
-
-        <div className="h-[420px]">
-          <Console events={state?.events ?? []} />
-        </div>
-      </section>
-
-      {/* -------------------------------------------------------------- vitals */}
-      <section className="mt-8">
-        <SectionHeading
-          title="Collector vitals"
-          note="every score is measured from the last real run, not asserted"
-        />
-        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {state?.members.map((member) => (
-            <VitalCard
-              key={member.collector.slug}
-              member={member}
-              selected={selected === member.collector.slug}
-              busy={busySlug === member.collector.slug}
-              onSelect={() =>
-                setSelected(
-                  member.collector.slug === selected ? undefined : member.collector.slug,
-                )
-              }
-              onObserve={() => dispatch("observe", { slug: member.collector.slug })}
-              onHeal={() => dispatch("heal", { slug: member.collector.slug })}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* ----------------------------------------------------- signals / ledger */}
-      <section className="mt-10 pb-16">
-        <div className="flex items-center gap-1 border-b border-line">
-          {(
-            [
-              ["signals", `Buying signals${selected ? " · filtered" : ""}`],
-              ["heals", "Heal ledger"],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`-mb-px border-b-2 px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest transition-colors ${
-                tab === key
-                  ? "border-silk text-silk"
-                  : "border-transparent text-ink-faint hover:text-ink-muted"
-              }`}
+            <motion.h1
+              variants={rise}
+              className="mt-5 font-display text-[clamp(2.6rem,5.2vw,4.2rem)] leading-[1.02] tracking-[-0.02em] text-ink"
             >
-              {label}
-            </button>
-          ))}
-        </div>
+              Find companies the week
+              <br />
+              they <em className="italic text-silk">start buying</em>.
+            </motion.h1>
 
-        <div className="mt-5">
-          {tab === "signals" ? (
-            <SignalBoard signals={filteredSignals} onOpenCompany={setOpenCompany} />
-          ) : (
-            <HealLedger
-              heals={state?.heals ?? []}
-              busySlug={busySlug}
-              onApprove={(slug, healId) => dispatch("approve", { slug, healId })}
-            />
-          )}
-        </div>
-      </section>
+            <motion.p
+              variants={rise}
+              className="mt-6 max-w-[62ch] text-[16.5px] leading-[1.65] text-ink-muted"
+            >
+              A company is not a lead because it exists in a directory. It is a lead
+              because something just changed — five revenue roles opened this week, a
+              changelog shipped SSO, a new name appeared in a funding batch. Spinneret
+              watches niche public sources for exactly those moments.
+            </motion.p>
+
+            <motion.p
+              variants={rise}
+              className="mt-4 max-w-[62ch] text-[16.5px] leading-[1.65] text-ink-muted"
+            >
+              The hard part is that those sources keep changing shape. A redesign
+              lands, a selector stops matching, and most pipelines carry on returning
+              rows that are quietly empty. Spinneret measures every run, notices the
+              drift, <span className="text-ink">writes its own repair prompt</span>,
+              and then proves the fix worked.
+            </motion.p>
+
+            <motion.dl variants={rise} className="mt-9 flex flex-wrap gap-x-10 gap-y-5">
+              <Stat
+                value={String(fleetHealth)}
+                label="Fleet Health"
+                colour={TONE_HEX[vitalTone(fleetHealth)]}
+              />
+              <Stat value={String(summary?.totalSignals ?? 0)} label="Signals Tracked" />
+              <Stat value={String(summary?.healsVerified ?? 0)} label="Heals Verified" />
+              <Stat value={String(state?.members.length ?? 0)} label="Live Collectors" />
+            </motion.dl>
+          </div>
+
+          <motion.div variants={rise} className="min-w-0">
+            {state && (
+              <WebCanvas
+                members={state.members}
+                selected={selected}
+                onSelect={(slug) => setSelected(slug === selected ? undefined : slug)}
+              />
+            )}
+          </motion.div>
+        </motion.section>
+
+        {/* --------------------------------------------------------- fleet */}
+        <Section
+          id="fleet"
+          title="Collector Vitals"
+          note="Every score is measured from the last real run — never asserted."
+        >
+          <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
+            <div className="grid min-w-0 gap-4 md:grid-cols-2">
+              {state?.members.map((member) => (
+                <VitalCard
+                  key={member.collector.slug}
+                  member={member}
+                  selected={selected === member.collector.slug}
+                  busy={busySlug === member.collector.slug}
+                  onSelect={() =>
+                    setSelected(
+                      member.collector.slug === selected ? undefined : member.collector.slug,
+                    )
+                  }
+                  onObserve={() => dispatch("observe", { slug: member.collector.slug })}
+                  onHeal={() => dispatch("heal", { slug: member.collector.slug })}
+                />
+              ))}
+            </div>
+
+            <div className="h-[560px] min-w-0">
+              <Console events={state?.events ?? []} />
+            </div>
+          </div>
+        </Section>
+
+        {/* ------------------------------------------------------- signals */}
+        <Section
+          id="signals"
+          title="Buying Signals"
+          note="Every point of every score traces back to a stated rule."
+        >
+          <Tabs
+            value={filter}
+            onValueChange={(value) => setFilter(value as SignalFilter)}
+          >
+            <TabsList>
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="hiring">Hiring</TabsTrigger>
+              <TabsTrigger value="directory">Directory</TabsTrigger>
+              <TabsTrigger value="changelog">Changelog</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value={filter} className="mt-5">
+              {selected && (
+                <p className="mb-3 font-mono text-[11px] text-ink-faint">
+                  Filtered to {selected} —{" "}
+                  <button
+                    onClick={() => setSelected(undefined)}
+                    className="text-silk underline underline-offset-4"
+                  >
+                    show all collectors
+                  </button>
+                </p>
+              )}
+              <SignalBoard signals={visibleSignals} onOpenCompany={setOpenCompany} />
+            </TabsContent>
+          </Tabs>
+        </Section>
+
+        {/* -------------------------------------------------------- ledger */}
+        <Section
+          id="ledger"
+          title="Heal Ledger"
+          note="Each entry pairs the prompt Spinneret wrote with the score before and after."
+        >
+          <HealLedger
+            heals={state?.heals ?? []}
+            busySlug={busySlug}
+            onApprove={(slug, healId) => dispatch("approve", { slug, healId })}
+          />
+        </Section>
+      </main>
 
       <CompanyDrawer
         company={openCompany}
         signals={state?.signals ?? []}
         onClose={() => setOpenCompany(undefined)}
       />
-    </main>
+    </>
   );
 }
 
 /* ------------------------------------------------------------------ fragments */
 
-function Stat({ label, value, colour }: { label: string; value: string; colour?: string }) {
+function Stat({ value, label, colour }: { value: string; label: string; colour?: string }) {
   return (
-    <div className="text-right">
-      <div
-        className="font-mono text-xl font-semibold"
-        style={{ color: colour ?? "var(--color-ink)" }}
+    <div>
+      <dd
+        className="tabular font-mono text-[26px] font-semibold leading-none"
+        style={{ color: colour ?? "var(--ink)" }}
       >
         {value}
-      </div>
-      <div className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
+      </dd>
+      <dt className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
         {label}
+      </dt>
+    </div>
+  );
+}
+
+function Section({
+  id,
+  title,
+  note,
+  children,
+}: {
+  id: string;
+  title: string;
+  note: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.section
+      id={id}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="scroll-mt-24 pt-14"
+    >
+      <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h2 className="font-display text-[30px] leading-none tracking-tight text-ink">
+          {title}
+        </h2>
+        <p className="text-[13.5px] text-ink-faint">{note}</p>
       </div>
-    </div>
-  );
-}
-
-function SectionHeading({ title, note }: { title: string; note: string }) {
-  return (
-    <div className="flex flex-wrap items-baseline gap-3">
-      <h2 className="text-lg font-medium text-ink">{title}</h2>
-      <p className="font-mono text-[11px] text-ink-faint">{note}</p>
-    </div>
-  );
-}
-
-/** Eight radial threads from a hub — the mark is the product's own diagram. */
-function SpinneretMark() {
-  return (
-    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-      {Array.from({ length: 8 }, (_, index) => {
-        const angle = (index / 8) * Math.PI * 2;
-        return (
-          <line
-            key={index}
-            x1={15}
-            y1={15}
-            x2={15 + Math.cos(angle) * 13}
-            y2={15 + Math.sin(angle) * 13}
-            stroke="#f0b429"
-            strokeWidth="1"
-            opacity={0.75}
-          />
-        );
-      })}
-      <circle cx="15" cy="15" r="9" fill="none" stroke="#f0b429" strokeWidth="0.8" opacity="0.5" />
-      <circle cx="15" cy="15" r="4.5" fill="none" stroke="#f0b429" strokeWidth="0.8" opacity="0.8" />
-      <circle cx="15" cy="15" r="2" fill="#f0b429" />
-    </svg>
+      {children}
+    </motion.section>
   );
 }

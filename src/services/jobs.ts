@@ -1,5 +1,6 @@
 import { findCollector } from "@/config/collectors";
 import * as repo from "@/db/repositories";
+import { tick } from "./scheduler";
 import { approveAndVerify, heal, observe } from "./sentinel";
 
 /**
@@ -51,6 +52,39 @@ export function startJob(slug: string, kind: JobKind, healId?: number): JobAccep
       );
     } finally {
       inFlight.delete(slug);
+    }
+  })();
+
+  return { accepted: true };
+}
+
+/** Guard so two sweeps cannot overlap and corrupt the shared baseline. */
+let sweeping = false;
+
+export function isSweeping(): boolean {
+  return sweeping;
+}
+
+/**
+ * Kick off a supervision pass over the whole fleet.
+ *
+ * Same code path the cron daemon uses — the button is a manual trigger for the
+ * scheduled behaviour, not a second implementation of it.
+ */
+export function startSweep(): JobAccepted {
+  if (sweeping) return { accepted: false, reason: "A sweep is already running" };
+  sweeping = true;
+
+  void (async () => {
+    try {
+      await tick();
+    } catch (error) {
+      repo.logEvent(
+        "warn",
+        `Sweep failed: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    } finally {
+      sweeping = false;
     }
   })();
 

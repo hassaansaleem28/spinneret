@@ -1,64 +1,202 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 /**
- * Spinneret design tokens.
+ * Spinneret design system.
  *
- * The palette is built around a single idea: silk against dark. Amber is the
- * thread the system spins, and the vitals ramp (emerald to amber to red) is the
- * only other place colour is allowed to appear — so any colour on screen means
- * something about health, and never merely decoration.
+ * One committed aesthetic: silk against dark. The product is a night-shift
+ * console — something you leave open on a second monitor — so the surface stays
+ * near-black and colour is rationed. Amber is the thread the system spins, and
+ * the vitals ramp (emerald → amber → red) is the only other colour permitted.
+ * Any colour on screen therefore means something about health; none of it is
+ * decoration.
+ *
+ * Typography is a deliberate pairing rather than a default: an editorial serif
+ * for display, a grotesque for interface text, and a true mono for telemetry.
+ * A dashboard that reads like a broadsheet is the memorable part.
  */
+
+/* ------------------------------------------------------------------ palette */
+
+:root {
+  color-scheme: dark;
+
+  /* Ground */
+  --void: #06070a;
+  --surface: #0b0d13;
+  --surface-2: #101319;
+  --surface-3: #161a22;
+  --line: #1c202b;
+  --line-bright: #2b3140;
+
+  /* Accent — the silk thread */
+  --silk: #f0b429;
+  --silk-soft: #f8d57e;
+  --silk-dim: #7a5a14;
+
+  /* Vitals ramp — reserved exclusively for health semantics */
+  --vital-good: #34d399;
+  --vital-warn: #fbbf24;
+  --vital-bad: #f87171;
+  --vital-dead: #64748b;
+
+  /* Ink */
+  --ink: #eceef4;
+  --ink-muted: #949cb0;
+  --ink-faint: #626a80;
+
+  /* shadcn semantic tokens, mapped onto the palette above so its components
+     inherit the design rather than sitting on top of it. */
+  --background: var(--void);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface-2);
+  --popover-foreground: var(--ink);
+  --primary: var(--silk);
+  --primary-foreground: #1a1204;
+  --secondary: var(--surface-3);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--surface-3);
+  --accent-foreground: var(--ink);
+  --destructive: var(--vital-bad);
+  --border: var(--line);
+  --input: var(--line-bright);
+  --ring: var(--silk);
+
+  --radius: 0.7rem;
+}
+
 @theme inline {
-  --color-void: #06070a;
-  --color-surface: #0c0e14;
-  --color-surface-2: #11141c;
-  --color-line: #1b1f2a;
-  --color-line-bright: #2a3040;
+  --color-void: var(--void);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-bright: var(--line-bright);
 
-  --color-silk: #f0b429;
-  --color-silk-dim: #7a5a14;
+  --color-silk: var(--silk);
+  --color-silk-soft: var(--silk-soft);
+  --color-silk-dim: var(--silk-dim);
 
-  --color-vital-good: #34d399;
-  --color-vital-warn: #fbbf24;
-  --color-vital-bad: #f87171;
-  --color-vital-dead: #64748b;
+  --color-vital-good: var(--vital-good);
+  --color-vital-warn: var(--vital-warn);
+  --color-vital-bad: var(--vital-bad);
+  --color-vital-dead: var(--vital-dead);
 
-  --color-ink: #e8eaf0;
-  --color-ink-muted: #8b93a7;
-  --color-ink-faint: #5a6178;
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-display: var(--font-instrument-serif);
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
 }
 
-html,
+/* -------------------------------------------------------------- base layer */
+
+html {
+  scroll-behavior: smooth;
+  /* Anchored headings must clear the sticky navbar. */
+  scroll-padding-top: 5.5rem;
+}
+
 body {
-  background: var(--color-void);
-  color: var(--color-ink);
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-archivo), ui-sans-serif, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Removes the 300ms double-tap delay without disabling pinch zoom. */
+  touch-action: manipulation;
 }
 
-/* The faint radial weave behind the whole page — a web, not a grid. */
-body::before {
-  content: "";
+/* Numbers that sit in columns must not jitter as they update. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* One visible focus treatment everywhere, so keyboard users are never lost. */
+:focus-visible {
+  outline: 2px solid var(--silk);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------- atmosphere */
+
+/**
+ * The page sits on a faint orb web rather than a grid. It is drawn with a
+ * conic gradient instead of an image so it costs nothing and scales to any
+ * viewport.
+ */
+.weave-backdrop {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(circle at 50% 0%, rgba(240, 180, 41, 0.06), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(240, 180, 41, 0.07), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 105%, rgba(52, 211, 153, 0.035), transparent 70%),
     repeating-conic-gradient(
-      from 0deg at 50% 40%,
-      rgba(255, 255, 255, 0.022) 0deg 0.35deg,
-      transparent 0.35deg 22.5deg
+      from 0deg at 50% 32%,
+      rgba(255, 255, 255, 0.02) 0deg 0.3deg,
+      transparent 0.3deg 20deg
     );
 }
+
+/* Fine grain stops the large dark fields from banding on cheap panels. */
+.weave-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ motion */
 
 /* Vitals pulse: the rate encodes urgency, so a failing node reads at a glance. */
 @keyframes vital-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.45; transform: scale(1.35); }
+  50%      { opacity: 0.4; transform: scale(1.4); }
 }
+
 /* SVG elements transform about the viewport origin by default, which would
    fling a scaling halo away from its node. fill-box re-anchors it to the shape. */
 .pulse-good,
@@ -67,30 +205,55 @@ body::before {
   transform-box: fill-box;
   transform-origin: center;
 }
-.pulse-good { animation: vital-pulse 2.6s ease-in-out infinite; }
-.pulse-warn { animation: vital-pulse 1.4s ease-in-out infinite; }
-.pulse-bad  { animation: vital-pulse 0.7s ease-in-out infinite; }
+.pulse-good { animation: vital-pulse 2.8s ease-in-out infinite; }
+.pulse-warn { animation: vital-pulse 1.5s ease-in-out infinite; }
+.pulse-bad  { animation: vital-pulse 0.75s ease-in-out infinite; }
 
-/* Silk shimmer travelling along a healed thread. */
+/* Silk travelling along a live thread — the visual cue that data is moving. */
 @keyframes thread-travel {
-  from { stroke-dashoffset: 260; }
+  from { stroke-dashoffset: 240; }
   to   { stroke-dashoffset: 0; }
 }
 .thread-travel {
-  stroke-dasharray: 5 14;
-  animation: thread-travel 3.5s linear infinite;
+  stroke-dasharray: 4 13;
+  animation: thread-travel 3.8s linear infinite;
 }
 
-@keyframes fade-rise {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes sheen {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
-.fade-rise { animation: fade-rise 0.35s ease-out both; }
 
-::-webkit-scrollbar { width: 7px; height: 7px; }
+/**
+ * Everything decorative stops for users who ask for less motion. Transitions on
+ * state changes are shortened rather than removed, so the interface still shows
+ * that something happened.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .pulse-good,
+  .pulse-warn,
+  .pulse-bad,
+  .thread-travel {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------- scrollbar */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-line-bright);
+  background: var(--line-bright);
   border-radius: 99px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-silk-dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--silk-dim); }
