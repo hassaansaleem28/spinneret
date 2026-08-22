@@ -1,0 +1,62 @@
+import { findCollector } from "@/config/collectors";
+import * as repo from "@/db/repositories";
+import { approveAndVerify, heal, observe } from "./sentinel";
+
+/**
+ * Background job runner for operations that outlive an HTTP request.
+ *
+ * A heal can take fifteen minutes, far past any sensible request timeout, so the
+ * API returns as soon as the work is accepted and the browser follows progress
+ * through the event stream instead of holding a connection open.
+ */
+
+type JobKind = "observe" | "heal" | "approve";
+
+/** One in-flight job per collector — concurrent runs would corrupt the baseline. */
+const inFlight = new Map<string, JobKind>();
+
+export function isBusy(slug: string): JobKind | undefined {
+  return inFlight.get(slug);
+}
+
+export interface JobAccepted {
+  accepted: boolean;
+  reason?: string;
+}
+
+export function startJob(slug: string, kind: JobKind, healId?: number): JobAccepted {
+  const collector = findCollector(slug);
+  if (!collector) return { accepted: false, reason: `Unknown collector "${slug}"` };
+
+  const running = inFlight.get(slug);
+  if (running) {
+    return { accepted: false, reason: `${slug} is already running a ${running} job` };
+  }
+
+  inFlight.set(slug, kind);
+
+  // Deliberately not awaited: the caller gets an immediate acknowledgement and
+  // the event log becomes the progress channel.
+  void (async () => {
+    try {
+      if (kind === "observe") {
+        await observe(collector);
+      } else if (kind === "heal") {
+        await heal(collector);
+      } else if (kind === "approve") {
+        if (healId === undefined) throw new Error("approve requires a healId");
+        await approveAndVerify(collector, healId);
+      }
+    } catch (error) {
+      repo.logEvent(
+        "warn",
+        `${kind} failed: ${error instanceof Error ? error.message : String(error)}`,
+        slug,
+      );
+    } finally {
+      inFlight.delete(slug);
+    }
+  })();
+
+  return { accepted: true };
+}
