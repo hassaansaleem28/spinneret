@@ -101,3 +101,86 @@ describe("deriveSignals", () => {
     expect(signals[0].company).toBe("High");
   });
 });
+
+describe("deriveSignals across source kinds", () => {
+  const changelog: Collector = {
+    slug: "velocity",
+    collectorId: "c_test",
+    url: "https://example.com/changelog",
+    kind: "changelog",
+    label: "Competitor changelog",
+    subjectCompany: "Linear",
+    expectedFields: ["release_title", "summary"],
+  };
+
+  it("attributes every row of a single-subject source to its subject company", () => {
+    // Changelog rows carry no company name — the collector names it instead.
+    const signals = deriveSignals(
+      changelog,
+      [{ release_title: "SAML SSO", summary: "Enterprise auth" }],
+      new Set(),
+      at,
+    );
+    expect(signals).toHaveLength(1);
+    expect(signals[0].company).toBe("Linear");
+  });
+
+  it("reads enterprise-readiness work as moving upmarket", () => {
+    const [signal] = deriveSignals(
+      changelog,
+      [{ release_title: "SCIM provisioning and audit logs", summary: "SOC 2 ready" }],
+      new Set(["Linear"]),
+      at,
+    );
+    expect(signal.rationale.join(" ")).toMatch(/upmarket/);
+  });
+
+  it("does not apply hiring rules to a changelog", () => {
+    // "Account executive" in a release note names a feature, not a hire. With no
+    // changelog rule matching either, the correct result is no signal at all —
+    // Spinneret never invents intent it cannot justify.
+    const signals = deriveSignals(
+      changelog,
+      [{ release_title: "Account executive dashboard", summary: "New view" }],
+      new Set(["Linear"]),
+      at,
+    );
+    expect(signals).toHaveLength(0);
+  });
+
+  it("scores directory listings on sector fit rather than job function", () => {
+    const directory: Collector = {
+      slug: "startups",
+      collectorId: "c_test",
+      url: "https://example.com",
+      kind: "directory",
+      label: "Startup directory",
+      expectedFields: ["company_name", "one_liner"],
+    };
+    const [signal] = deriveSignals(
+      directory,
+      [{ company_name: "Acme", one_liner: "B2B SaaS platform for developers" }],
+      new Set(["Acme"]),
+      at,
+    );
+    expect(signal.rationale.join(" ")).toMatch(/B2B software company/);
+  });
+
+  it("matches sector language across array fields, not just strings", () => {
+    const directory: Collector = {
+      slug: "startups",
+      collectorId: "c_test",
+      url: "https://example.com",
+      kind: "directory",
+      label: "Startup directory",
+      expectedFields: ["company_name", "tags"],
+    };
+    const [signal] = deriveSignals(
+      directory,
+      [{ company_name: "Acme", one_liner: "Car washes", tags: ["AI", "Automation"] }],
+      new Set(["Acme"]),
+      at,
+    );
+    expect(signal.rationale.join(" ")).toMatch(/AI-native/);
+  });
+});

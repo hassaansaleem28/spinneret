@@ -30,6 +30,17 @@ export const COLLECTORS: Collector[] = [
     label: "Funded startup directory",
     expectedFields: ["company_name", "one_liner", "tags", "location", "company_url"],
   },
+  {
+    slug: "product-velocity",
+    collectorId: "c_mt4fj43j1tvgzr9bs2",
+    url: "https://linear.app/changelog",
+    kind: "changelog",
+    label: "Competitor changelog",
+    // A changelog is a single-subject source: every entry belongs to one company,
+    // and no row carries a company name of its own.
+    subjectCompany: "Linear",
+    expectedFields: ["release_title", "publication_date", "summary", "permalink_url"],
+  },
 ];
 
 export function findCollector(slug: string): Collector | undefined {

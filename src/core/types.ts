@@ -26,6 +26,11 @@ export interface Collector {
    * what the sentinel treats as evidence of drift — not a hand-written alert.
    */
   expectedFields: string[];
+  /**
+   * Set for single-subject sources such as a competitor changelog, where every
+   * row belongs to one company and no row carries a company name of its own.
+   */
+  subjectCompany?: string;
 }
 
 /** One execution of a collector. Rows are left untyped: shape is site-specific. */

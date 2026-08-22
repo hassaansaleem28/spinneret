@@ -83,6 +83,62 @@ const EXPANSION_RULES: ScoringRule[] = [
   },
 ];
 
+/** Changelog rules: what shipping this implies about where the company is going. */
+const CHANGELOG_RULES: ScoringRule[] = [
+  {
+    id: "enterprise-readiness",
+    pattern: /\b(sso|saml|scim|audit log|rbac|compliance|soc ?2|enterprise)\b/i,
+    points: 34,
+    reason: "Shipped enterprise-readiness features — moving upmarket, larger deals ahead",
+  },
+  {
+    id: "integration-surface",
+    pattern: /\b(integration|connector|webhook|api|sdk|import|sync)\b/i,
+    points: 26,
+    reason: "Expanded integration surface — building an ecosystem play",
+  },
+  {
+    id: "ai-investment",
+    pattern: /\b(ai|agent|llm|copilot|model|intelligence)\b/i,
+    points: 22,
+    reason: "Investing in AI capability — active budget and roadmap pressure",
+  },
+  {
+    id: "scale-work",
+    pattern: /\b(performance|scale|latency|throughput|bulk)\b/i,
+    points: 16,
+    reason: "Scaling work shipped — usage is growing faster than the current system",
+  },
+];
+
+/** Directory rules: how well a listed company fits a B2B software ICP. */
+const SECTOR_RULES: ScoringRule[] = [
+  {
+    id: "b2b-saas",
+    pattern: /\b(b2b|saas|platform|infrastructure|developer|api)\b/i,
+    points: 24,
+    reason: "B2B software company — buys tooling as a matter of course",
+  },
+  {
+    id: "ai-native",
+    pattern: /\b(ai|agent|llm|machine learning|automation)\b/i,
+    points: 20,
+    reason: "AI-native company — typically well funded and fast to adopt new tooling",
+  },
+  {
+    id: "gtm-adjacent",
+    pattern: /\b(sales|marketing|crm|revenue|customer|support)\b/i,
+    points: 18,
+    reason: "Operates in the GTM space — understands and buys this category",
+  },
+  {
+    id: "fintech-health",
+    pattern: /\b(fintech|health|insurance|legal|compliance)\b/i,
+    points: 14,
+    reason: "Regulated vertical — higher willingness to pay for reliability",
+  },
+];
+
 const ALL_RULES = [...FUNCTION_RULES, ...SENIORITY_RULES, ...EXPANSION_RULES];
 
 /** Score bump applied when a company was absent from the previous run. */
@@ -144,10 +200,49 @@ function applyRules(
   };
 }
 
+/** Flatten every value in a row to searchable text, arrays included. */
+function rowText(row: Record<string, unknown>): string {
+  return Object.entries(row)
+    .filter(([key]) => key !== "input")
+    .map(([, value]) => (Array.isArray(value) ? value.join(" ") : String(value ?? "")))
+    .join(" | ");
+}
+
+/**
+ * Apply the rule set appropriate to the source.
+ *
+ * A job title, a changelog entry and a directory listing say different things
+ * about intent, so each gets its own table rather than one table stretched to
+ * cover all three. Only the strongest rule in a table applies, which stops a
+ * company with many similar rows from compounding the same evidence.
+ */
+function scoreByKind(
+  kind: SourceKind,
+  haystack: string,
+  locations: string,
+): { points: number; rationale: string[] } {
+  const collected: { points: number; rationale: string[] }[] = [];
+
+  if (kind === "hiring") {
+    collected.push(applyRules(haystack, FUNCTION_RULES, true));
+    collected.push(applyRules(haystack, SENIORITY_RULES, true));
+    collected.push(applyRules(locations || haystack, EXPANSION_RULES, true));
+  } else if (kind === "changelog" || kind === "pricing") {
+    collected.push(applyRules(haystack, CHANGELOG_RULES, true));
+  } else {
+    collected.push(applyRules(haystack, SECTOR_RULES, true));
+  }
+
+  return {
+    points: collected.reduce((sum, entry) => sum + entry.points, 0),
+    rationale: collected.flatMap((entry) => entry.rationale),
+  };
+}
+
 /**
  * Derive scored signals from one run's rows.
  *
- * `previouslySeen` carries the company set from the prior run; membership is what
+ * `previouslySeen` carries the company set from prior runs; membership is what
  * separates "this company exists" from "this company just appeared", which is the
  * distinction the entire product rests on.
  */
@@ -157,10 +252,11 @@ export function deriveSignals(
   previouslySeen: ReadonlySet<string>,
   detectedAt: string,
 ): Omit<Signal, "id">[] {
-  // Group rows by company so concurrent-opening volume can be scored.
+  // Group rows by company so concurrent activity can be scored together. A
+  // single-subject source (a competitor changelog) names its company up front.
   const byCompany = new Map<string, Record<string, unknown>[]>();
   for (const row of rows) {
-    const company = resolveField(row, COMPANY_KEYS);
+    const company = collector.subjectCompany ?? resolveField(row, COMPANY_KEYS);
     if (!company) continue;
     const bucket = byCompany.get(company) ?? [];
     bucket.push(row);
@@ -176,24 +272,22 @@ export function deriveSignals(
     const titles = companyRows
       .map((row) => resolveField(row, TITLE_KEYS))
       .filter((title): title is string => Boolean(title));
-    const haystack = titles.join(" | ");
 
-    // Function: only the strongest applies, so a single job cannot double-count.
-    const fn = applyRules(haystack, FUNCTION_RULES, true);
-    intent += fn.points;
-    rationale.push(...fn.rationale);
-
-    const seniority = applyRules(haystack, SENIORITY_RULES, true);
-    intent += seniority.points;
-    rationale.push(...seniority.rationale);
+    // Directory and changelog rules match on sector and feature language, which
+    // lives across several fields rather than in the title alone.
+    const haystack =
+      collector.kind === "hiring"
+        ? titles.join(" | ")
+        : companyRows.map(rowText).join(" | ");
 
     const locations = companyRows
       .map((row) => resolveField(row, LOCATION_KEYS))
       .filter((loc): loc is string => Boolean(loc))
       .join(" | ");
-    const expansion = applyRules(locations || haystack, EXPANSION_RULES, true);
-    intent += expansion.points;
-    rationale.push(...expansion.rationale);
+
+    const scored = scoreByKind(collector.kind, haystack, locations);
+    intent += scored.points;
+    rationale.push(...scored.rationale);
 
     if (!previouslySeen.has(company)) {
       intent += NEW_ENTRANT_POINTS;
@@ -211,7 +305,9 @@ export function deriveSignals(
       );
       intent += bonus;
       rationale.push(
-        `${companyRows.length} concurrent openings — coordinated team build-out, not backfill`,
+        collector.kind === "hiring"
+          ? `${companyRows.length} concurrent openings — coordinated team build-out, not backfill`
+          : `${companyRows.length} recent entries — sustained shipping velocity`,
       );
     }
 
