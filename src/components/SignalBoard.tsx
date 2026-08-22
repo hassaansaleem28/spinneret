@@ -18,7 +18,12 @@ function intentColour(intent: number): string {
   return "#8b93a7";
 }
 
-export function SignalBoard({ signals }: { signals: Signal[] }) {
+interface Props {
+  signals: Signal[];
+  onOpenCompany: (company: string) => void;
+}
+
+export function SignalBoard({ signals, onOpenCompany }: Props) {
   const [expanded, setExpanded] = useState<number>();
 
   if (signals.length === 0) {
@@ -74,7 +79,17 @@ export function SignalBoard({ signals }: { signals: Signal[] }) {
                       </span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-ink">{signal.company}</td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onOpenCompany(signal.company);
+                      }}
+                      className="text-left text-sm font-medium text-ink underline decoration-transparent underline-offset-4 transition-colors hover:decoration-silk"
+                    >
+                      {signal.company}
+                    </button>
+                  </td>
                   <td className="px-4 py-3 text-sm text-ink-muted">{signal.headline}</td>
                   <td className="px-4 py-3">
                     <span className="rounded border border-line-bright px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink-faint">

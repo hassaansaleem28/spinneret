@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { CompanyDrawer } from "@/components/CompanyDrawer";
 import { Console } from "@/components/Console";
 import { HealLedger } from "@/components/HealLedger";
 import { SignalBoard } from "@/components/SignalBoard";
@@ -16,6 +17,7 @@ export default function Dashboard() {
   const [selected, setSelected] = useState<string>();
   const [tab, setTab] = useState<Tab>("signals");
   const [busySlug, setBusySlug] = useState<string>();
+  const [openCompany, setOpenCompany] = useState<string>();
 
   /** Fire an action and let the event stream report what happens next. */
   const dispatch = useCallback(
@@ -150,7 +152,7 @@ export default function Dashboard() {
 
         <div className="mt-5">
           {tab === "signals" ? (
-            <SignalBoard signals={filteredSignals} />
+            <SignalBoard signals={filteredSignals} onOpenCompany={setOpenCompany} />
           ) : (
             <HealLedger
               heals={state?.heals ?? []}
@@ -160,6 +162,12 @@ export default function Dashboard() {
           )}
         </div>
       </section>
+
+      <CompanyDrawer
+        company={openCompany}
+        signals={state?.signals ?? []}
+        onClose={() => setOpenCompany(undefined)}
+      />
     </main>
   );
 }
