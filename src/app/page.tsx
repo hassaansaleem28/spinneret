@@ -108,7 +108,7 @@ export default function Dashboard() {
           title="Collector vitals"
           note="every score is measured from the last real run, not asserted"
         />
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {state?.members.map((member) => (
             <VitalCard
               key={member.collector.slug}

@@ -326,8 +326,27 @@ export function deriveSignals(
   return signals.sort((a, b) => b.intent - a.intent);
 }
 
+/** Longest headline that stays readable in a table row. */
+const HEADLINE_MAX_CHARS = 72;
+
+/**
+ * Shorten a title at a word boundary.
+ *
+ * Scraped titles can run long — a changelog entry often concatenates several
+ * release headings into one string — and an unclipped one wraps to three lines
+ * and breaks the scan pattern of the board.
+ */
+export function truncateTitle(title: string, maxChars = HEADLINE_MAX_CHARS): string {
+  const collapsed = title.replace(/\s+/g, " ").trim();
+  if (collapsed.length <= maxChars) return collapsed;
+
+  const clipped = collapsed.slice(0, maxChars);
+  const lastSpace = clipped.lastIndexOf(" ");
+  return `${(lastSpace > maxChars * 0.6 ? clipped.slice(0, lastSpace) : clipped).trimEnd()}…`;
+}
+
 function buildHeadline(kind: SourceKind, count: number, titles: string[]): string {
-  const sample = titles[0] ?? "role";
+  const sample = truncateTitle(titles[0] ?? "role");
   switch (kind) {
     case "hiring":
       return count > 1

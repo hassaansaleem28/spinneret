@@ -133,6 +133,9 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
               y={point.y - 30}
               textAnchor="middle"
               className="fill-[#e8eaf0] text-[13px] font-medium"
+              stroke="#06070a"
+              strokeWidth="3.5"
+              paintOrder="stroke"
             >
               {member.collector.label}
             </text>
@@ -142,6 +145,9 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
               textAnchor="middle"
               fill={colour}
               className="text-[15px] font-mono font-semibold"
+              stroke="#06070a"
+              strokeWidth="3.5"
+              paintOrder="stroke"
             >
               {member.score}
             </text>
@@ -150,6 +156,9 @@ export function WebCanvas({ members, onSelect, selected }: Props) {
               y={point.y + 51}
               textAnchor="middle"
               className="fill-[#5a6178] text-[10px] font-mono uppercase tracking-widest"
+              stroke="#06070a"
+              strokeWidth="3"
+              paintOrder="stroke"
             >
               {member.rowCount} rows
             </text>

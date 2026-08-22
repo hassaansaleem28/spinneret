@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveSignals, resolveField } from "@/core/signals";
+import { deriveSignals, resolveField, truncateTitle } from "@/core/signals";
 import type { Collector } from "@/core/types";
 
 const collector: Collector = {
@@ -182,5 +182,37 @@ describe("deriveSignals across source kinds", () => {
       at,
     );
     expect(signal.rationale.join(" ")).toMatch(/AI-native/);
+  });
+});
+
+describe("truncateTitle", () => {
+  it("leaves a short title untouched", () => {
+    expect(truncateTitle("Account Executive")).toBe("Account Executive");
+  });
+
+  it("collapses runs of whitespace", () => {
+    expect(truncateTitle("Account   Executive\n\nEnterprise")).toBe(
+      "Account Executive Enterprise",
+    );
+  });
+
+  it("clips a long title at a word boundary", () => {
+    const long = "Coding sessions on mobile Guided Reviews are now generally available Support for GitHub teams";
+    const result = truncateTitle(long);
+
+    expect(result.length).toBeLessThanOrEqual(73);
+    expect(result.endsWith("…")).toBe(true);
+
+    // The real property of a word-boundary clip: the kept text is a prefix of
+    // the original, and the original continues with a space rather than the
+    // rest of a chopped word.
+    const body = result.slice(0, -1);
+    expect(long.startsWith(body)).toBe(true);
+    expect(long[body.length]).toBe(" ");
+  });
+
+  it("falls back to a hard clip when there is no usable word boundary", () => {
+    const result = truncateTitle("a".repeat(200), 20);
+    expect(result).toBe(`${"a".repeat(20)}…`);
   });
 });
