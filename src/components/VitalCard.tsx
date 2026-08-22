@@ -1,5 +1,6 @@
 "use client";
 
+import { Sparkline } from "./Sparkline";
 import { pct, relativeTime, severityLabel, TONE_HEX, vitalTone } from "@/lib/format";
 import type { FleetMember } from "@/services/state";
 
@@ -41,6 +42,9 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
           </p>
         </div>
         <div className="shrink-0 text-right">
+          <div className="mb-1 flex justify-end">
+            <Sparkline history={member.history} />
+          </div>
           <div className="font-mono text-2xl font-semibold" style={{ color: colour }}>
             {member.score}
           </div>
