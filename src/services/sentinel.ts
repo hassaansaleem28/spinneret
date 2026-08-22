@@ -1,7 +1,7 @@
 import { scraperApprove, scraperHeal, scraperRun } from "@/adapters/brightdata/cli";
 import { detectDrift } from "@/core/drift";
 import { computeBaseline, computeHealth } from "@/core/health";
-import { composeHealPrompt } from "@/core/heal-prompt";
+import { composeHealPrompt, composeSchemaExtensionPrompt } from "@/core/heal-prompt";
 import { deriveSignals } from "@/core/signals";
 import type { Collector, DriftVerdict, HealthSnapshot } from "@/core/types";
 import * as repo from "@/db/repositories";
@@ -122,7 +122,16 @@ export async function heal(collector: Collector): Promise<HealResult> {
     evidence,
   };
 
-  const prompt = composeHealPrompt(collector, latest, enrichedVerdict);
+  // When some contracted fields still arrive and others never appeared, the task
+  // is to *extend* the schema rather than repair a drifted selector. Saying so
+  // plainly gives the healing AI a narrower, more reliable job.
+  const presentFields = latest.fields.filter((field) => !field.absent).map((f) => f.field);
+  const isPartialSchema =
+    enrichedVerdict.severity === "schema_gap" && presentFields.length > 0;
+
+  const prompt = isPartialSchema
+    ? composeSchemaExtensionPrompt(collector, presentFields)
+    : composeHealPrompt(collector, latest, enrichedVerdict);
 
   const healId = repo.insertHeal({
     collectorSlug: collector.slug,

@@ -139,8 +139,6 @@ const SECTOR_RULES: ScoringRule[] = [
   },
 ];
 
-const ALL_RULES = [...FUNCTION_RULES, ...SENIORITY_RULES, ...EXPANSION_RULES];
-
 /** Score bump applied when a company was absent from the previous run. */
 const NEW_ENTRANT_POINTS = 22;
 /** Score bump per additional concurrent opening at the same company. */

@@ -11,7 +11,6 @@ import { dirname, join } from "node:path";
  * the standard way to hold one connection across reloads.
  */
 declare global {
-  // eslint-disable-next-line no-var
   var __spinneretDb: Database.Database | undefined;
 }
 

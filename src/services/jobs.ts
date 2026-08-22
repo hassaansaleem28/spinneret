@@ -15,10 +15,6 @@ type JobKind = "observe" | "heal" | "approve";
 /** One in-flight job per collector — concurrent runs would corrupt the baseline. */
 const inFlight = new Map<string, JobKind>();
 
-export function isBusy(slug: string): JobKind | undefined {
-  return inFlight.get(slug);
-}
-
 export interface JobAccepted {
   accepted: boolean;
   reason?: string;

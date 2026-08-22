@@ -66,7 +66,7 @@ export function fitToBudget(sections: string[], maxChars: number): string {
   if (sections.length === 0) return "";
 
   const join = (parts: string[]): string => parts.join(" ");
-  let working = [...sections];
+  const working = [...sections];
 
   while (join(working).length > maxChars && working.length > 2) {
     // Drop the second-to-last evidence line: keeps the opening statement and

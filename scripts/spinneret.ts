@@ -14,6 +14,7 @@
  *   npm run spinneret -- status
  */
 import { COLLECTORS, findCollector } from "@/config/collectors";
+import { scraperCreate } from "@/adapters/brightdata/cli";
 import { approveAndVerify, heal, observe } from "@/services/sentinel";
 import * as repo from "@/db/repositories";
 
@@ -49,6 +50,25 @@ function severityColor(severity: string): string {
   if (severity === "healthy") return GREEN;
   if (severity === "degraded") return YELLOW;
   return RED;
+}
+
+/**
+ * Build a new collector from a natural-language description.
+ *
+ * Kept here so the whole lifecycle — create, observe, heal, approve — is drivable
+ * from one terminal, which is what the brief asks for.
+ */
+async function cmdCreate(url: string, description: string): Promise<void> {
+  if (!url || !description) {
+    throw new Error('Usage: create <url> "<description>"');
+  }
+  console.log(`${CYAN}▸ building a scraper for${RESET} ${url}`);
+  console.log(`${DIM}  AI generation typically takes 5-25 minutes${RESET}`);
+
+  const envelope = await scraperCreate(url, description, `spinneret-${Date.now()}`);
+
+  console.log(`\n${GREEN}collector created${RESET} ${BOLD}${envelope.collector_id}${RESET}`);
+  console.log(`${DIM}Add it to src/config/collectors.ts with the fields you want to contract for.${RESET}`);
 }
 
 async function cmdObserve(slug: string): Promise<void> {
@@ -161,13 +181,17 @@ async function main(): Promise<void> {
 
   switch (command) {
     case "seed":    return seed();
+    case "create":  return cmdCreate(args[0], args[1]);
     case "observe": return cmdObserve(args[0]);
     case "heal":    return cmdHeal(args[0]);
     case "approve": return cmdApprove(args[0], args[1]);
     case "cycle":   return cmdCycle(args[0]);
     case "status":  return cmdStatus();
     default:
-      console.log("commands: seed | observe <slug> | heal <slug> | approve <slug> <id> | cycle <slug> | status");
+      console.log(
+        "commands: seed | create <url> \"<desc>\" | observe <slug> | heal <slug> |\n" +
+          "          approve <slug> <id> | cycle <slug> | status",
+      );
       process.exitCode = command ? 1 : 0;
   }
 }
