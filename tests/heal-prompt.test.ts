@@ -59,7 +59,7 @@ describe("composeHealPrompt", () => {
   });
 
   it("fences off the fields that still work so a heal cannot regress them", () => {
-    expect(prompt).toMatch(/Do not change extraction for these fields.*company_name/s);
+    expect(prompt).toMatch(/Do not change extraction for these fields[\s\S]*company_name/);
   });
 
   it("restates the full contracted schema", () => {
