@@ -4,7 +4,7 @@
 
 Built for [Into the Scrape-Verse](https://www.wemakedevs.org/hackathons/scrape-verse) (Bright Data × WeMakeDevs, August 2026).
 
-**Live:** https://spinneret-i07a81otq-hassaansaleem28s-projects.vercel.app
+**Live:** https://spinneret-pied.vercel.app
 
 ---
 
@@ -197,6 +197,12 @@ npm run snapshot   # capture the live database into src/data/snapshot.json
 git commit -am "chore: refresh snapshot"
 git push           # Vercel deploys on push
 ```
+
+The hosted build is **not** inert. The Contract Lab is fully interactive there,
+because the scoring layer performs no I/O and therefore ships to the client and
+runs with zero latency. Change what a collector is required to return and the
+diagnosis re-runs in the browser, against rows those collectors genuinely
+produced, through the same functions the sentinel runs in production.
 
 The snapshot is plain JSON rather than the SQLite file itself, because `better-sqlite3`
 is a native addon and a failed native build on the host would take the whole deployment
