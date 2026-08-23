@@ -22,8 +22,6 @@
   <a href="https://spinneret-pied.vercel.app"><strong>Live App</strong></a>
   ·
   <a href="https://spinneret-pied.vercel.app/docs"><strong>Documentation</strong></a>
-  ·
-  <a href="DEMO.md"><strong>Demo Script</strong></a>
 </p>
 
 <p align="center">

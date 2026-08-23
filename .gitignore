@@ -47,3 +47,7 @@ next-env.d.ts
 data/*
 !data/snapshot.db
 scraper-studio/logs/
+
+# Presentation notes stay local. They are read aloud, not published.
+DEMO.md
+*.local.md
