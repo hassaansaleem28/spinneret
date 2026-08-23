@@ -6,9 +6,12 @@
 
 # The live database is written locally by the sentinel. The deployed build serves
 # src/data/snapshot.json instead and never opens SQLite.
-data/
-scraper-studio/logs/
+#
+# Leading slashes matter: a bare `data/` matches at every level and would swallow
+# src/data/ along with it, which removed the snapshot from the upload.
+/data/
+/scraper-studio/logs/
 
 # Local-only tooling
-tests/
+/tests/
 *.log
