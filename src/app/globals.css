@@ -3,6 +3,17 @@
 @import "shadcn/tailwind.css";
 
 /**
+ * Bind the `dark:` variant to the class next-themes writes on <html>.
+ *
+ * Without this, Tailwind falls back to a prefers-color-scheme media query, so
+ * every `dark:` utility silently tracks the operating system and ignores the
+ * in-page toggle. The palette below keys off `.dark` directly and kept working,
+ * which is what made the breakage easy to miss: only utility classes were
+ * affected, and the most visible of those was the toggle's own icon.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/**
  * Spinneret design system.
  *
  * One committed aesthetic: silk against dark. The product is a night-shift
