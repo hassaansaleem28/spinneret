@@ -53,6 +53,12 @@
   --grain-opacity: 0.05;
   --node-halo: 0.2;
   --scaffold: #cfc8ba;
+
+  /* Selection: a wash of the accent rather than the browser default blue,
+     which fights every other colour on the page. Kept low enough in alpha
+     that the ink underneath stays at full contrast while highlighted. */
+  --selection-bg: rgba(168, 106, 12, 0.22);
+  --selection-fg: #14130f;
 }
 
 .dark {
@@ -82,6 +88,9 @@
   --grain-opacity: 0.16;
   --node-halo: 0.15;
   --scaffold: #232838;
+
+  --selection-bg: rgba(240, 180, 41, 0.3);
+  --selection-fg: #fffaf0;
 }
 
 /* shadcn semantic tokens, mapped onto whichever palette is active so its
@@ -196,6 +205,24 @@ h1, h2, h3 {
 
 p {
   text-wrap: pretty;
+}
+
+/**
+ * Text selection.
+ *
+ * The browser default is a saturated blue that fights every colour in this
+ * palette. A low-alpha wash of the accent tints the background without
+ * dropping the contrast of the text being highlighted, so selected passages
+ * stay as readable as unselected ones in both themes.
+ */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+::-moz-selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 /* One visible focus treatment everywhere, so keyboard users are never lost. */
