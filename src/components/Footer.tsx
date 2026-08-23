@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 /**
@@ -33,9 +34,9 @@ export function Footer() {
             hackathon.
           </p>
           <p className="mt-4 max-w-[42ch] text-[12.5px] leading-[1.7] text-ink-faint">
-            Public sources only. Signals are company level, derived from public job
-            postings, directory listings and published changelogs. No personal data
-            is collected, stored or scored.
+            Public sources only. Signals are company level, derived from public
+            job postings, directory listings and published changelogs. No
+            personal data is collected, stored or scored.
           </p>
         </div>
 
@@ -79,7 +80,9 @@ export function Footer() {
           <ul className="mt-3.5 space-y-2.5">
             {COLLECTORS.map((collector) => (
               <li key={collector.id}>
-                <p className="font-mono text-[12px] text-ink-muted">{collector.slug}</p>
+                <p className="font-mono text-[12px] text-ink-muted">
+                  {collector.slug}
+                </p>
                 <code
                   translate="no"
                   className="font-mono text-[11.5px] text-silk"
@@ -95,8 +98,15 @@ export function Footer() {
       <Separator />
 
       <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-6 py-6">
-        <p className="font-mono text-[11.5px] text-ink-faint">
-          Built with Bright Data Scraper Studio
+        <p className="flex items-center gap-1.5 font-mono text-[11.5px] text-ink-faint">
+          Built with Bright Data Scraper Studio, by Hassaan with
+          {/* An SVG rather than an emoji: emoji render at the mercy of the
+              platform font and cannot inherit the palette. */}
+          <Heart
+            className="size-3 shrink-0 text-silk"
+            fill="currentColor"
+            aria-label="love"
+          />
         </p>
         <p className="font-mono text-[11.5px] text-ink-faint">
           Next.js · TypeScript · SQLite · shadcn/ui
@@ -124,8 +134,24 @@ function SpinneretMark() {
           />
         );
       })}
-      <circle cx="15" cy="15" r="9" fill="none" stroke="var(--silk)" strokeWidth="0.8" opacity="0.45" />
-      <circle cx="15" cy="15" r="4.5" fill="none" stroke="var(--silk)" strokeWidth="0.8" opacity="0.75" />
+      <circle
+        cx="15"
+        cy="15"
+        r="9"
+        fill="none"
+        stroke="var(--silk)"
+        strokeWidth="0.8"
+        opacity="0.45"
+      />
+      <circle
+        cx="15"
+        cy="15"
+        r="4.5"
+        fill="none"
+        stroke="var(--silk)"
+        strokeWidth="0.8"
+        opacity="0.75"
+      />
       <circle cx="15" cy="15" r="2" fill="var(--silk)" />
     </svg>
   );
