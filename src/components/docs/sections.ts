@@ -14,6 +14,7 @@ export const DOC_SECTIONS: DocSection[] = [
   { id: "health", label: "Health Scoring", group: "How It Works" },
   { id: "drift", label: "Drift Detection", group: "How It Works" },
   { id: "prompts", label: "Prompt Composition", group: "How It Works" },
+  { id: "lab", label: "Contract Lab", group: "How It Works" },
   { id: "signals", label: "Signal Scoring", group: "How It Works" },
 
   { id: "architecture", label: "Architecture", group: "Reference" },

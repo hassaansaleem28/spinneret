@@ -47,6 +47,7 @@ export function Footer() {
           <ul className="mt-3.5 space-y-2 text-[13.5px]">
             {[
               { href: "/#fleet", label: "Collector Fleet" },
+              { href: "/#lab", label: "Contract Lab" },
               { href: "/#signals", label: "Buying Signals" },
               { href: "/#ledger", label: "Heal Ledger" },
               { href: "/docs", label: "Documentation" },

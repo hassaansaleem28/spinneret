@@ -28,6 +28,7 @@ import { TONE_COLOR, vitalTone } from "@/lib/format";
 
 const SECTIONS = [
   { href: "/#fleet", label: "Fleet" },
+  { href: "/#lab", label: "Lab" },
   { href: "/#signals", label: "Signals" },
   { href: "/#ledger", label: "Ledger" },
   { href: "/docs", label: "Docs" },

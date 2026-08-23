@@ -286,6 +286,48 @@ minBaselineSamples:   2   // healthy runs needed before trusting comparisons`}</
         </P>
       </DocSection>
 
+      {/* ------------------------------------------------------------ lab */}
+      <DocSection id="lab" eyebrow="How It Works" title="Contract Lab">
+        <P>
+          Everything else on the dashboard is retrospective. It reports what already
+          happened and asks you to believe it. The Contract Lab is the one place you
+          can act, and it exists because a self-healing claim deserves to be tested
+          rather than trusted.
+        </P>
+        <P>
+          Pick a collector, change what it is required to return, and the whole
+          diagnosis re-runs in front of you: coverage moves, evidence assembles, and
+          the repair prompt writes itself a character at a time.
+        </P>
+
+        <H3>None of it is simulated</H3>
+        <P>
+          The rows being scored are rows those collectors genuinely returned on their
+          last healthy run. The scoring, the drift classification and the prompt
+          composition are the same functions the sentinel runs in production, not a
+          demonstration copy. Because the contract is the real definition of correct,
+          requiring a field the scraper does not produce makes it genuinely
+          non-compliant, and the text that appears is exactly what Spinneret would
+          dispatch to Bright Data.
+        </P>
+
+        <H3>Try this</H3>
+        <P>
+          Require <Code>salary</Code> on the job board collector. The score drops, the
+          field reads absent, and the prompt names it as the repair target while
+          explicitly fencing off the fields that still work. That protection clause is
+          generated, not written by hand, and it is what stops a repair regressing
+          extraction that was already correct.
+        </P>
+
+        <Note title="Why This Runs In Your Browser">
+          The scoring layer performs no I/O, which is the whole reason it can be
+          tested without a database or a Bright Data account. That same property lets
+          it ship to the client and run with zero latency, which is why the lab works
+          on the hosted snapshot as well as locally.
+        </Note>
+      </DocSection>
+
       {/* -------------------------------------------------------- signals */}
       <DocSection id="signals" eyebrow="How It Works" title="Signal Scoring">
         <P>

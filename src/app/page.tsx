@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CompanyDrawer } from "@/components/CompanyDrawer";
 import { Console } from "@/components/Console";
+import { ContractLab } from "@/components/ContractLab";
 import { Footer } from "@/components/Footer";
 import { HealLedger } from "@/components/HealLedger";
 import { Navbar } from "@/components/Navbar";
@@ -175,6 +176,15 @@ export default function Dashboard() {
               <Console events={state?.events ?? []} />
             </div>
           </div>
+        </Section>
+
+        {/* ----------------------------------------------------------- lab */}
+        <Section
+          id="lab"
+          title="Contract Lab"
+          note="Change what a collector owes and watch the diagnosis re-run on real rows."
+        >
+          {state && <ContractLab members={state.members} />}
         </Section>
 
         {/* ------------------------------------------------------- signals */}

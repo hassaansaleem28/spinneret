@@ -4,6 +4,9 @@ import * as repo from "@/db/repositories";
 import { isReadOnly } from "@/lib/runtime";
 import snapshot from "@/data/snapshot.json";
 
+/** Rows per collector handed to the client for the Contract Lab. */
+const SAMPLE_ROW_LIMIT = 24;
+
 /**
  * Read model for the dashboard.
  *
@@ -23,6 +26,15 @@ export interface FleetMember {
   history: number[];
   lastSeen?: string;
   rowCount: number;
+  /**
+   * A slice of the rows this collector actually returned on its last healthy run.
+   *
+   * Shipped to the client so the Contract Lab can re-score a real run against a
+   * contract the reader edits, using the same pure functions the sentinel runs.
+   * Capped because the whole point is to be instant, and nobody needs sixty rows
+   * to see a fill rate move.
+   */
+  sampleRows: Record<string, unknown>[];
 }
 
 export interface FleetState {
@@ -61,6 +73,11 @@ function liveFleetState(): FleetState {
     const history = repo.healthHistory(collector.slug, 24).map((row) => row.score);
     const [lastRun] = repo.recentRuns(collector.slug, 1);
 
+    // Prefer a run that actually returned data: re-scoring an empty timeout would
+    // show nothing moving whatever the reader does to the contract.
+    const [lastGoodRun] = repo.healthyRuns(collector.slug, 1, 1);
+    const source = lastGoodRun ?? lastRun;
+
     return {
       collector,
       score: health?.score ?? 0,
@@ -75,6 +92,7 @@ function liveFleetState(): FleetState {
       history,
       lastSeen: health?.capturedAt,
       rowCount: lastRun?.rowCount ?? 0,
+      sampleRows: (source?.rows ?? []).slice(0, SAMPLE_ROW_LIMIT),
     };
   });
 

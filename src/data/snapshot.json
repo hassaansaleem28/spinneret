@@ -58,7 +58,373 @@
         97
       ],
       "lastSeen": "2026-08-23T07:35:58.484Z",
-      "rowCount": 60
+      "rowCount": 60,
+      "sampleRows": [
+        {
+          "company_name": "Duranium",
+          "one_liner": "Reshoring critical metal production",
+          "tags": [
+            "Manufacturing",
+            "Advanced Materials",
+            "ClimateTech"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/duranium",
+          "product_page_url": "https://www.ycombinator.com/companies/duranium",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "KERNEL",
+          "one_liner": "Crazy fast, open source infra for AI agents to use the Internet",
+          "tags": [
+            "Developer Tools",
+            "Cloud Computing",
+            "Infrastructure",
+            "AI"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/kernel",
+          "product_page_url": "https://www.ycombinator.com/companies/kernel",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Quotain",
+          "one_liner": "AI sales simulations using your real deals",
+          "tags": [
+            "Sales",
+            "Sales Enablement",
+            "AI"
+          ],
+          "location": "New York City, NY",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/quotain",
+          "product_page_url": "https://www.ycombinator.com/companies/quotain",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Blue",
+          "one_liner": "Your phone finally has someone to run it. Plug in Blue, just ask.",
+          "tags": [
+            "Hardware",
+            "Productivity",
+            "AI"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/blue",
+          "product_page_url": "https://www.ycombinator.com/companies/blue",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Sira",
+          "one_liner": "AI Native Rippling for Deskless Workers",
+          "tags": [],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/sira",
+          "product_page_url": "https://www.ycombinator.com/companies/sira",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Interfere",
+          "one_liner": "Give engineering, product, and design teams insight into unseen issues",
+          "tags": [
+            "Developer Tools",
+            "Design",
+            "AI"
+          ],
+          "location": "New York City, NY",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/interfere",
+          "product_page_url": "https://www.ycombinator.com/companies/interfere",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "NOSO LABS",
+          "one_liner": "Build AI agents for field technicians to diagnose and sell 10x better",
+          "tags": [
+            "Artificial Intelligence"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/noso-labs",
+          "product_page_url": "https://www.ycombinator.com/companies/noso-labs",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Rebulk",
+          "one_liner": "Accurately measure and monitor bulk inventory",
+          "tags": [
+            "Computer Vision",
+            "Supply Chain",
+            "Agriculture",
+            "AI",
+            "Industrial"
+          ],
+          "location": "Olathe, KS",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/rebulk",
+          "product_page_url": "https://www.ycombinator.com/companies/rebulk",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "RealRoots",
+          "one_liner": "IRL friendship app for women",
+          "tags": [],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/realroots",
+          "product_page_url": "https://www.ycombinator.com/companies/realroots",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Paloma",
+          "one_liner": "Digital transformation for real economy businesses",
+          "tags": [
+            "Artificial Intelligence",
+            "SaaS",
+            "Analytics",
+            "Manufacturing",
+            "Operations"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/paloma",
+          "product_page_url": "https://www.ycombinator.com/companies/paloma",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Pally",
+          "one_liner": "Your personal AI Assistant",
+          "tags": [
+            "Artificial Intelligence",
+            "Consumer",
+            "B2B",
+            "Productivity",
+            "Search"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/pally",
+          "product_page_url": "https://www.ycombinator.com/companies/pally",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Convexia",
+          "one_liner": "The world's first AI-maximalist pharma company",
+          "tags": [
+            "AI-powered Drug Discovery",
+            "Biotech",
+            "Drug Delivery"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/convexia",
+          "product_page_url": "https://www.ycombinator.com/companies/convexia",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Spotlight Realty",
+          "one_liner": "AI powered brokerage reducing residential rental commissions in NYC…",
+          "tags": [
+            "Machine Learning",
+            "Real Estate"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/spotlight-realty",
+          "product_page_url": "https://www.ycombinator.com/companies/spotlight-realty",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Avelis Health",
+          "one_liner": "We audit medical claims for self-insured employers and health plans.",
+          "tags": [],
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/avelis-health",
+          "product_page_url": "https://www.ycombinator.com/companies/avelis-health",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Vulcan Technologies",
+          "one_liner": "Secure frontier AI for government & adjacent knowledge work",
+          "tags": [],
+          "location": "Austin, TX",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/vulcan-technologies",
+          "product_page_url": "https://www.ycombinator.com/companies/vulcan-technologies",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Avent",
+          "one_liner": "AI agents for industrial commerce",
+          "tags": [],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/avent",
+          "product_page_url": "https://www.ycombinator.com/companies/avent",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "PARES AI",
+          "one_liner": "AI-native real estate services firm",
+          "tags": [
+            "Artificial Intelligence",
+            "Real Estate",
+            "Proptech",
+            "Conversational AI"
+          ],
+          "location": "Los Angeles, CA",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/pares-ai",
+          "product_page_url": "https://www.ycombinator.com/companies/pares-ai",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "F2",
+          "one_liner": "The AI platform for private markets investors",
+          "tags": [
+            "AI"
+          ],
+          "location": "New York City, NY",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/f2",
+          "product_page_url": "https://www.ycombinator.com/companies/f2",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "CLODO",
+          "one_liner": "Planet-scale people discovery.",
+          "tags": [
+            "Artificial Intelligence",
+            "B2B",
+            "Recruiting",
+            "Sales",
+            "AI Assistant"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/clodo",
+          "product_page_url": "https://www.ycombinator.com/companies/clodo",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Omnara",
+          "one_liner": "The Open-Source Alternative to Claude Managed Agents",
+          "tags": [
+            "Artificial Intelligence",
+            "Developer Tools",
+            "AI Assistant"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/omnara",
+          "product_page_url": "https://www.ycombinator.com/companies/omnara",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Veritus",
+          "one_liner": "AI agents for the consumer lending industry",
+          "tags": [
+            "Fintech",
+            "Lending",
+            "AI"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/veritus",
+          "product_page_url": "https://www.ycombinator.com/companies/veritus",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Minimal AI",
+          "one_liner": "AI Agents for E-commerce Customer Support",
+          "tags": [],
+          "location": "Amsterdam, Netherlands",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/minimal-ai",
+          "product_page_url": "https://www.ycombinator.com/companies/minimal-ai",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "burnt",
+          "one_liner": "Agentic Operating System for Food Supply Chain",
+          "tags": [
+            "Supply Chain",
+            "Food Tech",
+            "AI"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/burnt",
+          "product_page_url": "https://www.ycombinator.com/companies/burnt",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        },
+        {
+          "company_name": "Notte",
+          "one_liner": "Reliable Web Agents for Enterprise",
+          "tags": [
+            "Developer Tools",
+            "Automation",
+            "AI"
+          ],
+          "location": "San Francisco",
+          "batch": "Summer 2025",
+          "company_url": "https://www.ycombinator.com/companies/notte",
+          "product_page_url": "https://www.ycombinator.com/companies/notte",
+          "input": {
+            "url": "https://www.ycombinator.com/companies?batch=Summer%202025"
+          }
+        }
+      ]
     },
     {
       "collector": {
@@ -112,7 +478,222 @@
         95
       ],
       "lastSeen": "2026-08-23T07:04:05.913Z",
-      "rowCount": 52
+      "rowCount": 52,
+      "sampleRows": [
+        {
+          "job_title": "Content Strategist",
+          "company_name": "Descript",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/descript-content-strategist",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Operations Specialist, Virtual Marketing Events",
+          "company_name": "Gartner",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/gartner-operations-specialist-virtual-marketing-events",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Affiliate Marketing Manager",
+          "company_name": "Hello There Collective",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/hello-there-collective-affiliate-marketing-manager",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior Product Adoption Strategist (Shopping)",
+          "company_name": "reddit",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/reddit-senior-product-adoption-strategist-shopping-1",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Account Executive, Named - Germany",
+          "company_name": "Rubrik Job Board",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/rubrik-job-board-account-executive-named-germany",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Derivative Sales Analyst",
+          "company_name": "Coinbase",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/coinbase-derivative-sales-analyst",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Account Executive - Energy",
+          "company_name": "Celonis",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/celonis-account-executive-energy",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior Off-Page SEO & Link Building Specialist",
+          "company_name": "OnePet",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/onepet-senior-off-page-seo-link-building-specialist",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Director, Sales",
+          "company_name": "Platform.sh",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/platform-sh-director-sales",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Marketing Automation Analyst",
+          "company_name": "CLEAResult",
+          "job_url": "https://weworkremotely.com/remote-jobs/clearesult-marketing-automation-analyst",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Director of Sales, New Logo",
+          "company_name": "Temporal Technologies",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/temporal-technologies-director-of-sales-new-logo",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Campaign Manager - SEO & AI Content",
+          "company_name": "Clover Labs AI",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/clover-labs-ai-campaign-manager-seo-ai-content",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior Named Account Executive",
+          "company_name": "commercetools",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/commercetools-senior-named-account-executive",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Gaming Marketing and Events Manager",
+          "company_name": "BetMGM",
+          "job_url": "https://weworkremotely.com/remote-jobs/betmgm-gaming-marketing-and-events-manager",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "International Moving Sales",
+          "company_name": "Logicstics",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/logicstics-international-moving-sales",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Client Success Advisor",
+          "company_name": "SiteCare",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/sitecare-client-success-advisor",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Account Executive, Patient Experience",
+          "company_name": "Tebra",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/tebra-account-executive-patient-experience",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Content Marketing Coordinator",
+          "company_name": "DesignFiles",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/designfiles-content-marketing-coordinator",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior Demand Generation Manager",
+          "company_name": "TestGorilla",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/testgorilla-senior-demand-generation-manager",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior SDR",
+          "company_name": "Wellness Clinic Marketing",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/wellness-clinic-marketing-senior-sdr",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Senior Enterprise Sales Manager (m/w/d) – Industrial Software",
+          "company_name": "Pepperl+Fuchs",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/pepperl-fuchs-senior-enterprise-sales-manager-m-w-d-industrial-software",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Remote High-Ticket Closer",
+          "company_name": "6 Figure Creative",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/6-figure-creative-remote-high-ticket-closer",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Account Executive, Growth",
+          "company_name": "Tebra",
+          "location": "Anywhere in the World",
+          "job_url": "https://weworkremotely.com/remote-jobs/tebra-account-executive-growth",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        },
+        {
+          "job_title": "Online Marketing / Content Marketing Mitarbeiter (m/w/d) für Social Media, Website, Print",
+          "company_name": "WARNON Service- und Verwaltungsgesellschaft mbH",
+          "job_url": "https://weworkremotely.com/remote-jobs/warnon-service-und-verwaltungsgesellschaft-mbh-online-marketing-content-marketing-mitarbeiter-m-w-d-fur-social-media",
+          "input": {
+            "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs"
+          }
+        }
+      ]
     },
     {
       "collector": {
@@ -164,7 +745,109 @@
         100
       ],
       "lastSeen": "2026-08-23T07:13:18.058Z",
-      "rowCount": 10
+      "rowCount": 10,
+      "sampleRows": [
+        {
+          "release_title": "Initiative properties Centrally manage access to Linear’s MCP server in Claude ⁠ Share filtered views ⁠",
+          "publication_date": "2026-07-02T00:00:00.000Z",
+          "summary": "Initiatives define your company’s high-level goals and organize the projects that contribute to them. To help you manage initiatives as your roadmap grows, we’ve added a new set of focused initiative properties:",
+          "permalink_url": "https://linear.app/changelog/2026-07-02-initiative-properties",
+          "product_page_url": "https://linear.app/changelog/2026-07-02-initiative-properties",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Agent assisted project updates Desktop navigation history and pinned tabs ⁠ Private sub-teams ⁠ Build agents with Vercel Eve ⁠ Release pipeline changelogs ⁠ OAuth application manifests ⁠",
+          "publication_date": "2026-06-18T00:00:00.000Z",
+          "summary": "Project and initiative updates keep teams aligned, but writing them means pulling out recent changes from issues, documents, and discussions.",
+          "permalink_url": "https://linear.app/changelog/2026-06-18-agent-assisted-project-updates",
+          "product_page_url": "https://linear.app/changelog/2026-06-18-agent-assisted-project-updates",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Text attribution and agent-assisted editing Refreshed issue sidebar ⁠",
+          "publication_date": "2026-07-23T00:00:00.000Z",
+          "summary": "Documents and project descriptions are critical context for your teams and agents.",
+          "permalink_url": "https://linear.app/changelog/2026-07-23-agent-assisted-editing",
+          "product_page_url": "https://linear.app/changelog/2026-07-23-agent-assisted-editing",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Introducing Loops",
+          "publication_date": "2026-07-20T00:00:00.000Z",
+          "summary": "Loops are a new way for Linear Agent to take on recurring work for your team.",
+          "permalink_url": "https://linear.app/changelog/2026-07-20-introducing-loops",
+          "product_page_url": "https://linear.app/changelog/2026-07-20-introducing-loops",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Linear Diffs",
+          "publication_date": "2026-05-28T00:00:00.000Z",
+          "summary": "Agents generate large volumes of code, but individuals are still accountable for the changes that merge. This leads to a lot of review work, and the capability and performance of traditional review tools hasn’t kept up.",
+          "permalink_url": "https://linear.app/changelog/2026-05-27-linear-diffs",
+          "product_page_url": "https://linear.app/changelog/2026-05-27-linear-diffs",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Coding sessions: environments, browser use, and updated pricing Configurable environments ⁠ Browser testing ⁠ Transparent pricing ⁠",
+          "publication_date": "2026-08-20T00:00:00.000Z",
+          "summary": "Linear Agent can now set up, run, and test your code before returning its work. That means fewer handoffs and changes that are further along when they come back to you.",
+          "permalink_url": "https://linear.app/changelog/2026-08-20-coding-environments",
+          "product_page_url": "https://linear.app/changelog/2026-08-20-coding-environments",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Team documents Shared skills for Linear Agent ⁠ Issue description comments ⁠",
+          "publication_date": "2026-06-04T00:00:00.000Z",
+          "summary": "Important team context doesn’t always belong in a specific issue, project, or initiative. Teams also need a dedicated place for the notes, docs, and shared references that support their work over time. Now, every team has a page to keep its context organized and easy to access.",
+          "permalink_url": "https://linear.app/changelog/2026-06-04-team-documents",
+          "product_page_url": "https://linear.app/changelog/2026-06-04-team-documents",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Coding sessions on mobile Guided Reviews are now generally available ⁠ Support for GitHub teams in reviews ⁠ Signed commits for coding sessions ⁠ GitHub Copilot for Linear ⁠",
+          "publication_date": "2026-07-30T00:00:00.000Z",
+          "summary": "Your coding session doesn’t have to stop when you leave your desk. Use the Linear mobile app to review code changes, comment on specific lines, and iterate with Linear Agent.",
+          "permalink_url": "https://linear.app/changelog/2026-07-30-coding-sessions-on-mobile",
+          "product_page_url": "https://linear.app/changelog/2026-07-30-coding-sessions-on-mobile",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Team initiatives Enterprise-managed authorization for MCP ⁠",
+          "publication_date": "2026-08-13T00:00:00.000Z",
+          "summary": "Initiatives are Linear’s way to manage product strategy and high-level planning across projects. Strategy may start at the company level, but teams carry it forward. You can now assign a team to lead an initiative, making it clear who is responsible for driving the work and how it contributes to the broader direction.",
+          "permalink_url": "https://linear.app/changelog/2026-08-13-team-initiatives",
+          "product_page_url": "https://linear.app/changelog/2026-08-13-team-initiatives",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        },
+        {
+          "release_title": "Coding sessions in Linear A coding agent your team will love ⁠ Automate the first pass ⁠ Availability and pricing ⁠",
+          "publication_date": "2026-06-11T00:00:00.000Z",
+          "summary": "Earlier this year, we launched Linear Agent , giving teams a new way to plan and coordinate their issues and projects. Since then, we’ve added Code Intelligence to extend that understanding to the codebase, and MCP support to bring all of your context together.",
+          "permalink_url": "https://linear.app/changelog/2026-06-11-coding-sessions",
+          "product_page_url": "https://linear.app/changelog/2026-06-11-coding-sessions",
+          "input": {
+            "url": "https://linear.app/changelog"
+          }
+        }
+      ]
     }
   ],
   "events": [
