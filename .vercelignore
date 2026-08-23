@@ -1,0 +1,14 @@
+# Belt and braces on top of .gitignore. Nothing here should ever reach a build
+# host, and an accidental upload of a token is not a recoverable mistake.
+.env
+.env.*
+!.env.example
+
+# The live database is written locally by the sentinel. The deployed build serves
+# src/data/snapshot.json instead and never opens SQLite.
+data/
+scraper-studio/logs/
+
+# Local-only tooling
+tests/
+*.log

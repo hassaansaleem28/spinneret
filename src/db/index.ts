@@ -1,7 +1,30 @@
-import Database from "better-sqlite3";
+import type Database from "better-sqlite3";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { isReadOnly } from "@/lib/runtime";
+
+/**
+ * better-sqlite3 is loaded lazily, and this is a deployment concern rather than a
+ * performance one.
+ *
+ * It is a native addon. A static import would make the host resolve and load the
+ * compiled binary as soon as anything in the module graph is touched, including on
+ * a read-only build that never opens a database at all. If that native build is
+ * missing or was compiled for another platform, the whole site fails rather than
+ * one unused code path. Requiring it inside open() means the snapshot build never
+ * asks for it.
+ */
+const lazyRequire = createRequire(import.meta.url);
+
+type DatabaseConstructor = new (
+  path: string,
+  options?: { readonly?: boolean; fileMustExist?: boolean },
+) => Database.Database;
+
+function loadDriver(): DatabaseConstructor {
+  return lazyRequire("better-sqlite3") as DatabaseConstructor;
+}
 
 /**
  * Single long-lived SQLite handle.
@@ -33,7 +56,8 @@ function open(): Database.Database {
 
   if (!readOnly) mkdirSync(dirname(path), { recursive: true });
 
-  const db = new Database(path, { readonly: readOnly, fileMustExist: readOnly });
+  const SqliteDatabase = loadDriver();
+  const db = new SqliteDatabase(path, { readonly: readOnly, fileMustExist: readOnly });
 
   if (readOnly) {
     // No pragmas, no migration, no schema exec: every one of those writes, and

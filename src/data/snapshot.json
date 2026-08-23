@@ -1,1 +1,1288 @@
-{"readOnly":true,"members":[],"events":[],"signals":[],"heals":[],"summary":{"fleetHealth":0,"healthyCount":0,"degradedCount":0,"totalSignals":0,"healsVerified":0}}
+{
+  "readOnly": true,
+  "members": [
+    {
+      "collector": {
+        "slug": "funded-startups",
+        "collectorId": "c_mt4e1as4160iqj53as",
+        "url": "https://www.ycombinator.com/companies?batch=Summer%202025",
+        "kind": "directory",
+        "label": "Funded startup directory",
+        "expectedFields": [
+          "company_name",
+          "one_liner",
+          "tags",
+          "location",
+          "company_url"
+        ]
+      },
+      "score": 97,
+      "severity": "healthy",
+      "coverage": 0.9400000000000001,
+      "schemaConformance": 1,
+      "yieldRatio": 1,
+      "fields": [
+        {
+          "field": "company_name",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "one_liner",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "tags",
+          "fillRate": 0.75,
+          "absent": false
+        },
+        {
+          "field": "location",
+          "fillRate": 0.95,
+          "absent": false
+        },
+        {
+          "field": "company_url",
+          "fillRate": 1,
+          "absent": false
+        }
+      ],
+      "evidence": [],
+      "history": [
+        97,
+        97,
+        97,
+        97,
+        0,
+        97
+      ],
+      "lastSeen": "2026-08-23T07:35:58.484Z",
+      "rowCount": 60
+    },
+    {
+      "collector": {
+        "slug": "hiring-signals",
+        "collectorId": "c_mt4dzl5v15c84o86sa",
+        "url": "https://weworkremotely.com/categories/remote-sales-and-marketing-jobs",
+        "kind": "hiring",
+        "label": "Remote GTM job board",
+        "expectedFields": [
+          "company_name",
+          "job_title",
+          "location",
+          "job_url"
+        ]
+      },
+      "score": 95,
+      "severity": "healthy",
+      "coverage": 0.9663461538461539,
+      "schemaConformance": 1,
+      "yieldRatio": 0.8125,
+      "fields": [
+        {
+          "field": "company_name",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "job_title",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "location",
+          "fillRate": 0.8653846153846154,
+          "absent": false
+        },
+        {
+          "field": "job_url",
+          "fillRate": 1,
+          "absent": false
+        }
+      ],
+      "evidence": [],
+      "history": [
+        20,
+        97,
+        95,
+        97,
+        93,
+        94,
+        95
+      ],
+      "lastSeen": "2026-08-23T07:04:05.913Z",
+      "rowCount": 52
+    },
+    {
+      "collector": {
+        "slug": "product-velocity",
+        "collectorId": "c_mt4fj43j1tvgzr9bs2",
+        "url": "https://linear.app/changelog",
+        "kind": "changelog",
+        "label": "Competitor changelog",
+        "expectedFields": [
+          "release_title",
+          "publication_date",
+          "summary",
+          "permalink_url"
+        ]
+      },
+      "score": 100,
+      "severity": "healthy",
+      "coverage": 1,
+      "schemaConformance": 1,
+      "yieldRatio": 1,
+      "fields": [
+        {
+          "field": "release_title",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "publication_date",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "summary",
+          "fillRate": 1,
+          "absent": false
+        },
+        {
+          "field": "permalink_url",
+          "fillRate": 1,
+          "absent": false
+        }
+      ],
+      "evidence": [],
+      "history": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "lastSeen": "2026-08-23T07:13:18.058Z",
+      "rowCount": 10
+    }
+  ],
+  "events": [
+    {
+      "id": 47,
+      "at": "2026-08-23T07:37:38.616Z",
+      "level": "ok",
+      "collectorSlug": "funded-startups",
+      "message": "Health 97/100 · 60 rows · healthy · 60 new signals"
+    },
+    {
+      "id": 46,
+      "at": "2026-08-23T07:35:58.483Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 45,
+      "at": "2026-08-23T07:14:21.636Z",
+      "level": "ok",
+      "collectorSlug": "product-velocity",
+      "message": "Health 100/100 · 10 rows · healthy · 1 new signals"
+    },
+    {
+      "id": 44,
+      "at": "2026-08-23T07:13:18.057Z",
+      "level": "info",
+      "collectorSlug": "product-velocity",
+      "message": "Running collector c_mt4fj43j1tvgzr9bs2"
+    },
+    {
+      "id": 43,
+      "at": "2026-08-23T07:13:17.300Z",
+      "level": "warn",
+      "collectorSlug": "funded-startups",
+      "message": "Row count is 0% of the 60-row baseline, which suggests the row or pagination selector broke rather than an individual field."
+    },
+    {
+      "id": 42,
+      "at": "2026-08-23T07:13:17.300Z",
+      "level": "warn",
+      "collectorSlug": "funded-startups",
+      "message": "Fields never returned as keys in the output: company_name, one_liner, tags, location, company_url."
+    },
+    {
+      "id": 41,
+      "at": "2026-08-23T07:13:17.299Z",
+      "level": "warn",
+      "collectorSlug": "funded-startups",
+      "message": "Health 0/100 · 0 rows · schema_gap"
+    },
+    {
+      "id": 40,
+      "at": "2026-08-23T07:11:47.653Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 39,
+      "at": "2026-08-23T07:11:46.637Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 95/100 · 52 rows · healthy · 48 new signals"
+    },
+    {
+      "id": 38,
+      "at": "2026-08-23T07:04:05.910Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 37,
+      "at": "2026-08-23T06:11:03.556Z",
+      "level": "ok",
+      "message": "Sweep complete. 3 observed, 0 repaired"
+    },
+    {
+      "id": 36,
+      "at": "2026-08-23T06:11:03.555Z",
+      "level": "ok",
+      "collectorSlug": "product-velocity",
+      "message": "Health 100/100 · 10 rows · healthy"
+    },
+    {
+      "id": 35,
+      "at": "2026-08-23T06:10:17.215Z",
+      "level": "info",
+      "collectorSlug": "product-velocity",
+      "message": "Running collector c_mt4fj43j1tvgzr9bs2"
+    },
+    {
+      "id": 34,
+      "at": "2026-08-23T06:09:57.213Z",
+      "level": "ok",
+      "collectorSlug": "funded-startups",
+      "message": "Health 97/100 · 60 rows · healthy"
+    },
+    {
+      "id": 33,
+      "at": "2026-08-23T06:07:51.386Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 32,
+      "at": "2026-08-23T06:07:31.384Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 94/100 · 61 rows · healthy · 4 new signals"
+    },
+    {
+      "id": 31,
+      "at": "2026-08-23T06:04:00.034Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 93/100 · 61 rows · healthy · 3 new signals"
+    },
+    {
+      "id": 30,
+      "at": "2026-08-23T06:02:09.850Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 29,
+      "at": "2026-08-23T06:02:09.849Z",
+      "level": "info",
+      "message": "Scheduled sweep starting across 3 collectors"
+    },
+    {
+      "id": 28,
+      "at": "2026-08-23T05:58:13.299Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 27,
+      "at": "2026-08-22T16:41:40.395Z",
+      "level": "ok",
+      "message": "Sweep complete. 3 observed, 0 repaired"
+    },
+    {
+      "id": 26,
+      "at": "2026-08-22T16:41:40.395Z",
+      "level": "ok",
+      "collectorSlug": "product-velocity",
+      "message": "Health 100/100 · 10 rows · healthy · 1 new signals"
+    },
+    {
+      "id": 25,
+      "at": "2026-08-22T16:40:50.182Z",
+      "level": "info",
+      "collectorSlug": "product-velocity",
+      "message": "Running collector c_mt4fj43j1tvgzr9bs2"
+    },
+    {
+      "id": 24,
+      "at": "2026-08-22T16:40:30.177Z",
+      "level": "ok",
+      "collectorSlug": "funded-startups",
+      "message": "Health 97/100 · 60 rows · healthy"
+    },
+    {
+      "id": 23,
+      "at": "2026-08-22T16:37:50.628Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 22,
+      "at": "2026-08-22T16:37:30.625Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 97/100 · 64 rows · healthy · 10 new signals"
+    },
+    {
+      "id": 21,
+      "at": "2026-08-22T16:32:02.827Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 20,
+      "at": "2026-08-22T16:32:02.826Z",
+      "level": "info",
+      "message": "Scheduled sweep starting across 3 collectors"
+    },
+    {
+      "id": 19,
+      "at": "2026-08-22T14:26:03.609Z",
+      "level": "ok",
+      "collectorSlug": "product-velocity",
+      "message": "Health 100/100 · 10 rows · healthy · 1 new signals"
+    },
+    {
+      "id": 18,
+      "at": "2026-08-22T14:25:03.460Z",
+      "level": "info",
+      "collectorSlug": "product-velocity",
+      "message": "Running collector c_mt4fj43j1tvgzr9bs2"
+    },
+    {
+      "id": 17,
+      "at": "2026-08-22T14:06:54.655Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 95/100 · 66 rows · healthy · 53 new signals"
+    },
+    {
+      "id": 16,
+      "at": "2026-08-22T13:55:53.977Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 15,
+      "at": "2026-08-22T13:55:53.325Z",
+      "level": "ok",
+      "collectorSlug": "funded-startups",
+      "message": "Health 97/100 · 60 rows · healthy · 60 new signals"
+    },
+    {
+      "id": 14,
+      "at": "2026-08-22T13:53:52.602Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 13,
+      "at": "2026-08-22T13:53:51.799Z",
+      "level": "ok",
+      "collectorSlug": "product-velocity",
+      "message": "Health 100/100 · 10 rows · healthy · 1 new signals"
+    },
+    {
+      "id": 12,
+      "at": "2026-08-22T13:52:49.649Z",
+      "level": "info",
+      "collectorSlug": "product-velocity",
+      "message": "Running collector c_mt4fj43j1tvgzr9bs2"
+    },
+    {
+      "id": 11,
+      "at": "2026-08-22T13:22:07.933Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Heal verified — health recovered 20 to 97/100"
+    },
+    {
+      "id": 10,
+      "at": "2026-08-22T13:22:07.931Z",
+      "level": "ok",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 97/100 · 65 rows · healthy · 54 new signals"
+    },
+    {
+      "id": 9,
+      "at": "2026-08-22T13:15:34.935Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    },
+    {
+      "id": 8,
+      "at": "2026-08-22T13:15:31.563Z",
+      "level": "heal",
+      "collectorSlug": "hiring-signals",
+      "message": "Approving heal 1"
+    },
+    {
+      "id": 7,
+      "at": "2026-08-22T13:14:45.697Z",
+      "level": "ok",
+      "collectorSlug": "funded-startups",
+      "message": "Health 97/100 · 60 rows · healthy · 60 new signals"
+    },
+    {
+      "id": 6,
+      "at": "2026-08-22T13:14:26.816Z",
+      "level": "heal",
+      "collectorSlug": "hiring-signals",
+      "message": "Heal dispatched for c_mt4dzl5v15c84o86sa — status awaiting_approval"
+    },
+    {
+      "id": 5,
+      "at": "2026-08-22T13:12:50.389Z",
+      "level": "info",
+      "collectorSlug": "funded-startups",
+      "message": "Running collector c_mt4e1as4160iqj53as"
+    },
+    {
+      "id": 4,
+      "at": "2026-08-22T13:12:22.669Z",
+      "level": "heal",
+      "collectorSlug": "hiring-signals",
+      "message": "Composed heal prompt from telemetry: \"The scraper for Remote GTM job board (https://weworkremotely.com/categories/remote-sales-and-marketing-jobs) is returning incomplete data. Fields never returned as keys in the output: company_name, job_title, location, job_url. Re-derive selectors for company_name, job_title, location, job_url from the current live DOM and return the full contracted schema: company_name, job_title, location, job_url.\""
+    },
+    {
+      "id": 3,
+      "at": "2026-08-22T13:11:56.734Z",
+      "level": "warn",
+      "collectorSlug": "hiring-signals",
+      "message": "Fields never returned as keys in the output: company_name, job_title, location, job_url."
+    },
+    {
+      "id": 2,
+      "at": "2026-08-22T13:11:56.734Z",
+      "level": "warn",
+      "collectorSlug": "hiring-signals",
+      "message": "Health 20/100 · 66 rows · schema_gap"
+    },
+    {
+      "id": 1,
+      "at": "2026-08-22T13:10:34.360Z",
+      "level": "info",
+      "collectorSlug": "hiring-signals",
+      "message": "Running collector c_mt4dzl5v15c84o86sa"
+    }
+  ],
+  "signals": [
+    {
+      "id": 517,
+      "collectorSlug": "product-velocity",
+      "detectedAt": "2026-08-23T07:13:18.058Z",
+      "company": "Linear",
+      "fingerprint": "product-velocity::linear::agent assisted project updates desktop navigation history and pinned tabs ⁠ private sub-teams ⁠ build agents with vercel eve ⁠ release pipeline changelogs ⁠ oauth application manifests ⁠|coding sessions in linear a coding agent your team will love ⁠ automate the first pass ⁠ availability and pricing ⁠|coding sessions on mobile guided reviews are now generally available ⁠ support for github teams in reviews ⁠ signed commits for coding sessions ⁠ github copilot for linear ⁠|coding sessions: environments, browser use, and updated pricing configurable environments ⁠ browser testing ⁠ transparent pricing ⁠|initiative properties centrally manage access to linear’s mcp server in claude ⁠ share filtered views ⁠|introducing loops|linear diffs|team documents shared skills for linear agent ⁠ issue description comments ⁠|team initiatives enterprise-managed authorization for mcp ⁠|text attribution and agent-assisted editing refreshed issue sidebar ⁠",
+      "kind": "changelog",
+      "headline": "Shipped: Agent assisted project updates Desktop navigation history and pinned…",
+      "intent": 83,
+      "rationale": [
+        "Shipped enterprise-readiness features, so it is moving upmarket toward larger deals",
+        "First observation, establishing a baseline for future change detection",
+        "10 recent entries, which shows sustained shipping velocity"
+      ],
+      "sourceUrl": "https://linear.app/changelog/2026-07-02-initiative-properties"
+    },
+    {
+      "id": 469,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Rubrik Job Board",
+      "fingerprint": "hiring-signals::rubrik job board::account executive|account executive, named - germany",
+      "kind": "hiring",
+      "headline": "Opened 2 roles including Account Executive",
+      "intent": 69,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection",
+        "2 concurrent openings, a coordinated build-out rather than backfill"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/rubrik-job-board-account-executive-named-germany"
+    },
+    {
+      "id": 470,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Tebra",
+      "fingerprint": "hiring-signals::tebra::account executive, growth|account executive, patient experience",
+      "kind": "hiring",
+      "headline": "Opened 2 roles including Account Executive, Growth",
+      "intent": 69,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection",
+        "2 concurrent openings, a coordinated build-out rather than backfill"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/tebra-account-executive-patient-experience"
+    },
+    {
+      "id": 471,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Fin",
+      "fingerprint": "hiring-signals::fin::account executive, midmarket (latam)|relationship manager, mid market (latam)",
+      "kind": "hiring",
+      "headline": "Opened 2 roles including Account Executive, MidMarket (LATAM)",
+      "intent": 69,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection",
+        "2 concurrent openings, a coordinated build-out rather than backfill"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/fin-relationship-manager-mid-market-latam"
+    },
+    {
+      "id": 472,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Celonis",
+      "fingerprint": "hiring-signals::celonis::account executive - energy",
+      "kind": "hiring",
+      "headline": "Opened a role: Account Executive - Energy",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/celonis-account-executive-energy"
+    },
+    {
+      "id": 473,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "commercetools",
+      "fingerprint": "hiring-signals::commercetools::senior named account executive",
+      "kind": "hiring",
+      "headline": "Opened a role: Senior Named Account Executive",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/commercetools-senior-named-account-executive"
+    },
+    {
+      "id": 474,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Wellness Clinic Marketing",
+      "fingerprint": "hiring-signals::wellness clinic marketing::senior sdr",
+      "kind": "hiring",
+      "headline": "Opened a role: Senior SDR",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/wellness-clinic-marketing-senior-sdr"
+    },
+    {
+      "id": 475,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Mixpanel",
+      "fingerprint": "hiring-signals::mixpanel::account executive, latam",
+      "kind": "hiring",
+      "headline": "Opened a role: Account Executive, LATAM",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/mixpanel-account-executive-latam"
+    },
+    {
+      "id": 476,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Credit Wellness LLC",
+      "fingerprint": "hiring-signals::credit wellness llc::inside sales - account executive",
+      "kind": "hiring",
+      "headline": "Opened a role: Inside Sales - Account Executive",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/credit-wellness-llc-inside-sales-account-executive"
+    },
+    {
+      "id": 477,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Iterable",
+      "fingerprint": "hiring-signals::iterable::account executive (enterprise) - west region",
+      "kind": "hiring",
+      "headline": "Opened a role: Account Executive (Enterprise) - West Region",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/iterable-account-executive-enterprise-west-region"
+    },
+    {
+      "id": 478,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Webflow",
+      "fingerprint": "hiring-signals::webflow::corporate account executive - west",
+      "kind": "hiring",
+      "headline": "Opened a role: Corporate Account Executive - West",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/webflow-corporate-account-executive-west"
+    },
+    {
+      "id": 479,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Flexport",
+      "fingerprint": "hiring-signals::flexport::account executive, enterprise",
+      "kind": "hiring",
+      "headline": "Opened a role: Account Executive, Enterprise",
+      "intent": 60,
+      "rationale": [
+        "Revenue-carrying role, so the GTM motion is scaling and tooling budget follows",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/flexport-account-executive-enterprise"
+    },
+    {
+      "id": 480,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Platform.sh",
+      "fingerprint": "hiring-signals::platform.sh::director, sales",
+      "kind": "hiring",
+      "headline": "Opened a role: Director, Sales",
+      "intent": 48,
+      "rationale": [
+        "Executive-level opening, which carries budget authority",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/platform-sh-director-sales"
+    },
+    {
+      "id": 481,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Temporal Technologies",
+      "fingerprint": "hiring-signals::temporal technologies::director of sales, new logo",
+      "kind": "hiring",
+      "headline": "Opened a role: Director of Sales, New Logo",
+      "intent": 48,
+      "rationale": [
+        "Executive-level opening, which carries budget authority",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/temporal-technologies-director-of-sales-new-logo"
+    },
+    {
+      "id": 482,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Amwell",
+      "fingerprint": "hiring-signals::amwell::sr. account director",
+      "kind": "hiring",
+      "headline": "Opened a role: Sr. Account Director",
+      "intent": 48,
+      "rationale": [
+        "Executive-level opening, which carries budget authority",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/amwell-sr-account-director"
+    },
+    {
+      "id": 483,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "garden3d",
+      "fingerprint": "hiring-signals::garden3d::head of marketing & communications",
+      "kind": "hiring",
+      "headline": "Opened a role: Head of Marketing & Communications",
+      "intent": 48,
+      "rationale": [
+        "Executive-level opening, which carries budget authority",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/garden3d-head-of-marketing-communications"
+    },
+    {
+      "id": 484,
+      "collectorSlug": "hiring-signals",
+      "detectedAt": "2026-08-23T07:04:05.913Z",
+      "company": "Cockroach Labs",
+      "fingerprint": "hiring-signals::cockroach labs::regional sales director, central amer",
+      "kind": "hiring",
+      "headline": "Opened a role: Regional Sales Director, Central AMER",
+      "intent": 48,
+      "rationale": [
+        "Executive-level opening, which carries budget authority",
+        "Geographically open hire, so the company is expanding into new markets",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/cockroach-labs-regional-sales-director-central-amer"
+    },
+    {
+      "id": 518,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "KERNEL",
+      "fingerprint": "funded-startups::kernel::crazy fast, open source infra for ai agents to use the internet",
+      "kind": "directory",
+      "headline": "Listed in directory: Crazy fast, open source infra for AI agents to use the Internet",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/kernel"
+    },
+    {
+      "id": 519,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Interfere",
+      "fingerprint": "funded-startups::interfere::give engineering, product, and design teams insight into unseen issues",
+      "kind": "directory",
+      "headline": "Listed in directory: Give engineering, product, and design teams insight into unseen issues",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/interfere"
+    },
+    {
+      "id": 520,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Paloma",
+      "fingerprint": "funded-startups::paloma::digital transformation for real economy businesses",
+      "kind": "directory",
+      "headline": "Listed in directory: Digital transformation for real economy businesses",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/paloma"
+    },
+    {
+      "id": 521,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Pally",
+      "fingerprint": "funded-startups::pally::your personal ai assistant",
+      "kind": "directory",
+      "headline": "Listed in directory: Your personal AI Assistant",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/pally"
+    },
+    {
+      "id": 522,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "F2",
+      "fingerprint": "funded-startups::f2::the ai platform for private markets investors",
+      "kind": "directory",
+      "headline": "Listed in directory: The AI platform for private markets investors",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/f2"
+    },
+    {
+      "id": 523,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "CLODO",
+      "fingerprint": "funded-startups::clodo::planet-scale people discovery.",
+      "kind": "directory",
+      "headline": "Listed in directory: Planet-scale people discovery.",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/clodo"
+    },
+    {
+      "id": 524,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Omnara",
+      "fingerprint": "funded-startups::omnara::the open-source alternative to claude managed agents",
+      "kind": "directory",
+      "headline": "Listed in directory: The Open-Source Alternative to Claude Managed Agents",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/omnara"
+    },
+    {
+      "id": 525,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Notte",
+      "fingerprint": "funded-startups::notte::reliable web agents for enterprise",
+      "kind": "directory",
+      "headline": "Listed in directory: Reliable Web Agents for Enterprise",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/notte"
+    },
+    {
+      "id": 526,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Autosana",
+      "fingerprint": "funded-startups::autosana::ai agents for e2e testing across mobile & web",
+      "kind": "directory",
+      "headline": "Listed in directory: AI agents for E2E testing across mobile & web",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/autosana"
+    },
+    {
+      "id": 527,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "SigmanticAI",
+      "fingerprint": "funded-startups::sigmanticai::the cursor for chip design - delivering silicon-ready chip designs…",
+      "kind": "directory",
+      "headline": "Listed in directory: The Cursor for Chip Design - Delivering Silicon-Ready Chip Designs…",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/sigmanticai"
+    },
+    {
+      "id": 528,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Okibi",
+      "fingerprint": "funded-startups::okibi::turns products into clis and agents into customers",
+      "kind": "directory",
+      "headline": "Listed in directory: Turns products into CLIs and agents into customers",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/okibi"
+    },
+    {
+      "id": 529,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "RowFlow",
+      "fingerprint": "funded-startups::rowflow::replacing forms with ai conversations",
+      "kind": "directory",
+      "headline": "Listed in directory: Replacing forms with AI conversations",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/rowflow"
+    },
+    {
+      "id": 530,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Alara",
+      "fingerprint": "funded-startups::alara::procurement platform for dental offices",
+      "kind": "directory",
+      "headline": "Listed in directory: Procurement Platform for Dental Offices",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/alara"
+    },
+    {
+      "id": 531,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Modelence",
+      "fingerprint": "funded-startups::modelence::build production-ready apps with ai",
+      "kind": "directory",
+      "headline": "Listed in directory: Build production-ready apps with AI",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/modelence"
+    },
+    {
+      "id": 532,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "F4 Industries",
+      "fingerprint": "funded-startups::f4 industries::the gd&t analysis platform for engineering drawings",
+      "kind": "directory",
+      "headline": "Listed in directory: The GD&T Analysis Platform for Engineering Drawings",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/f4-industries"
+    },
+    {
+      "id": 533,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Reacher",
+      "fingerprint": "funded-startups::reacher::we automate creator marketing for the world's largest brands",
+      "kind": "directory",
+      "headline": "Listed in directory: We automate creator marketing for the world's largest brands",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/reacher"
+    },
+    {
+      "id": 534,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Nautilus",
+      "fingerprint": "funded-startups::nautilus::ai platform to grow and to optimize car washes",
+      "kind": "directory",
+      "headline": "Listed in directory: AI platform to grow and to optimize car washes",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/nautilus"
+    },
+    {
+      "id": 535,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Floot",
+      "fingerprint": "funded-startups::floot::the easiest way for non-coders to build apps with ai.",
+      "kind": "directory",
+      "headline": "Listed in directory: The easiest way for non-coders to build apps with AI.",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/floot"
+    },
+    {
+      "id": 536,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Munify",
+      "fingerprint": "funded-startups::munify::the cross-border neobank for the middle east",
+      "kind": "directory",
+      "headline": "Listed in directory: The Cross-Border Neobank for the Middle East",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/munify"
+    },
+    {
+      "id": 537,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Certus AI",
+      "fingerprint": "funded-startups::certus ai::replacing the restaurant phone line with voice ai",
+      "kind": "directory",
+      "headline": "Listed in directory: Replacing the restaurant phone line with Voice AI",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/certus-ai"
+    },
+    {
+      "id": 538,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Luminal",
+      "fingerprint": "funded-startups::luminal::making ai run fast on any hardware.",
+      "kind": "directory",
+      "headline": "Listed in directory: Making AI run fast on any hardware.",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/luminal"
+    },
+    {
+      "id": 539,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "TectoAI",
+      "fingerprint": "funded-startups::tectoai::a platform for ai governance",
+      "kind": "directory",
+      "headline": "Listed in directory: A Platform for AI Governance",
+      "intent": 46,
+      "rationale": [
+        "B2B software company, which buys tooling as a matter of course",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/tectoai"
+    },
+    {
+      "id": 540,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Quotain",
+      "fingerprint": "funded-startups::quotain::ai sales simulations using your real deals",
+      "kind": "directory",
+      "headline": "Listed in directory: AI sales simulations using your real deals",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/quotain"
+    },
+    {
+      "id": 541,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Blue",
+      "fingerprint": "funded-startups::blue::your phone finally has someone to run it. plug in blue, just ask.",
+      "kind": "directory",
+      "headline": "Listed in directory: Your phone finally has someone to run it. Plug in Blue, just ask.",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/blue"
+    },
+    {
+      "id": 542,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Sira",
+      "fingerprint": "funded-startups::sira::ai native rippling for deskless workers",
+      "kind": "directory",
+      "headline": "Listed in directory: AI Native Rippling for Deskless Workers",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/sira"
+    },
+    {
+      "id": 543,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "NOSO LABS",
+      "fingerprint": "funded-startups::noso labs::build ai agents for field technicians to diagnose and sell 10x better",
+      "kind": "directory",
+      "headline": "Listed in directory: Build AI agents for field technicians to diagnose and sell 10x better",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/noso-labs"
+    },
+    {
+      "id": 544,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Rebulk",
+      "fingerprint": "funded-startups::rebulk::accurately measure and monitor bulk inventory",
+      "kind": "directory",
+      "headline": "Listed in directory: Accurately measure and monitor bulk inventory",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/rebulk"
+    },
+    {
+      "id": 545,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Convexia",
+      "fingerprint": "funded-startups::convexia::the world's first ai-maximalist pharma company",
+      "kind": "directory",
+      "headline": "Listed in directory: The world's first AI-maximalist pharma company",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/convexia"
+    },
+    {
+      "id": 546,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Spotlight Realty",
+      "fingerprint": "funded-startups::spotlight realty::ai powered brokerage reducing residential rental commissions in nyc…",
+      "kind": "directory",
+      "headline": "Listed in directory: AI powered brokerage reducing residential rental commissions in NYC…",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/spotlight-realty"
+    },
+    {
+      "id": 547,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Vulcan Technologies",
+      "fingerprint": "funded-startups::vulcan technologies::secure frontier ai for government & adjacent knowledge work",
+      "kind": "directory",
+      "headline": "Listed in directory: Secure frontier AI for government & adjacent knowledge work",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/vulcan-technologies"
+    },
+    {
+      "id": 548,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Avent",
+      "fingerprint": "funded-startups::avent::ai agents for industrial commerce",
+      "kind": "directory",
+      "headline": "Listed in directory: AI agents for industrial commerce",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/avent"
+    },
+    {
+      "id": 549,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "PARES AI",
+      "fingerprint": "funded-startups::pares ai::ai-native real estate services firm",
+      "kind": "directory",
+      "headline": "Listed in directory: AI-native real estate services firm",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/pares-ai"
+    },
+    {
+      "id": 550,
+      "collectorSlug": "funded-startups",
+      "detectedAt": "2026-08-23T07:35:58.484Z",
+      "company": "Veritus",
+      "fingerprint": "funded-startups::veritus::ai agents for the consumer lending industry",
+      "kind": "directory",
+      "headline": "Listed in directory: AI agents for the consumer lending industry",
+      "intent": 42,
+      "rationale": [
+        "AI-native company, typically well funded and quick to adopt new tooling",
+        "First observation, establishing a baseline for future change detection"
+      ],
+      "sourceUrl": "https://www.ycombinator.com/companies/veritus"
+    }
+  ],
+  "heals": [
+    {
+      "id": 1,
+      "collectorSlug": "hiring-signals",
+      "createdAt": "2026-08-22T13:12:22.664Z",
+      "prompt": "The scraper for Remote GTM job board (https://weworkremotely.com/categories/remote-sales-and-marketing-jobs) is returning incomplete data. Fields never returned as keys in the output: company_name, job_title, location, job_url. Re-derive selectors for company_name, job_title, location, job_url from the current live DOM and return the full contracted schema: company_name, job_title, location, job_url.",
+      "status": "verified",
+      "scoreBefore": 20,
+      "scoreAfter": 97,
+      "notes": "Verification run scored 97/100 (was 20/100)."
+    }
+  ],
+  "summary": {
+    "fleetHealth": 97,
+    "healthyCount": 3,
+    "degradedCount": 0,
+    "totalSignals": 109,
+    "healsVerified": 1
+  }
+}

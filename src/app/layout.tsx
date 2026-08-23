@@ -59,6 +59,23 @@ export default function RootLayout({
       className={`${instrumentSerif.variable} ${archivo.variable} ${jetbrainsMono.variable} h-full`}
       suppressHydrationWarning
     >
+      <head>
+        {/*
+          Entrance animations render their initial state inline during SSR, which
+          means the served HTML carries opacity:0. With scripting unavailable that
+          state is never advanced and the page reads as blank. The content is all
+          in the markup already, so this simply reveals it.
+        */}
+        <noscript>
+          <style>{`
+            [style*="opacity:0"],
+            [style*="opacity: 0"] {
+              opacity: 1 !important;
+              transform: none !important;
+            }
+          `}</style>
+        </noscript>
+      </head>
       <body className="min-h-full antialiased">
         {/* Keyboard users must be able to jump the navbar. */}
         <a
