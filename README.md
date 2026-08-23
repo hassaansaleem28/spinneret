@@ -4,6 +4,8 @@
 
 Built for [Into the Scrape-Verse](https://www.wemakedevs.org/hackathons/scrape-verse) (Bright Data × WeMakeDevs, August 2026).
 
+**Live:** https://spinneret-i07a81otq-hassaansaleem28s-projects.vercel.app
+
 ---
 
 ## The problem
