@@ -562,3 +562,11 @@ our word for it.
   ·
   <a href="https://spinneret-pied.vercel.app/docs"><strong>Read the docs</strong></a>
 </p>
+
+<p align="center">
+  <img src="docs/assets/logo.svg" width="44" alt="" />
+</p>
+
+<p align="center">
+  <sub>Built with Bright Data Scraper Studio, by Hassaan with ❤️ for the Bright Data × WeMakeDevs Hackathon, August 2026</sub>
+</p>
