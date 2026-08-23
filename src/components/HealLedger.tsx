@@ -29,9 +29,10 @@ interface Props {
   heals: HealAttempt[];
   onApprove: (slug: string, healId: number) => void;
   busySlug?: string;
+  readOnly?: boolean;
 }
 
-export function HealLedger({ heals, onApprove, busySlug }: Props) {
+export function HealLedger({ heals, onApprove, busySlug, readOnly }: Props) {
   if (heals.length === 0) {
     return (
       <Card className="border-line bg-surface/70 p-8 text-center">
@@ -110,7 +111,7 @@ export function HealLedger({ heals, onApprove, busySlug }: Props) {
               {heal.status === "awaiting_approval" && (
                 <Button
                   size="sm"
-                  disabled={busySlug === heal.collectorSlug}
+                  disabled={busySlug === heal.collectorSlug || readOnly}
                   onClick={() => onApprove(heal.collectorSlug, heal.id)}
                   className="mt-3.5 w-fit font-mono text-[11px]"
                 >

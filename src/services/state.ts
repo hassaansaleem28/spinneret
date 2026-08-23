@@ -1,6 +1,8 @@
 import { COLLECTORS } from "@/config/collectors";
 import type { Collector, HealAttempt, Signal } from "@/core/types";
 import * as repo from "@/db/repositories";
+import { isReadOnly } from "@/lib/runtime";
+import snapshot from "@/data/snapshot.json";
 
 /**
  * Read model for the dashboard.
@@ -24,6 +26,8 @@ export interface FleetMember {
 }
 
 export interface FleetState {
+  /** True when this build cannot run collectors or dispatch heals. */
+  readOnly: boolean;
   members: FleetMember[];
   events: repo.EventRecord[];
   signals: Signal[];
@@ -37,7 +41,18 @@ export interface FleetState {
   };
 }
 
+/**
+ * Assemble the dashboard state.
+ *
+ * A read-only build serves the committed snapshot and never touches SQLite, so
+ * the deployed bundle has no native-module dependency at request time.
+ */
 export function buildFleetState(): FleetState {
+  if (isReadOnly()) return snapshot as FleetState;
+  return liveFleetState();
+}
+
+function liveFleetState(): FleetState {
   const registered = repo.listCollectors();
   const collectors = registered.length > 0 ? registered : COLLECTORS;
 
@@ -72,6 +87,7 @@ export function buildFleetState(): FleetState {
   const heals = repo.listHeals(20);
 
   return {
+    readOnly: false,
     members,
     events: repo.listEvents(70),
     signals: repo.listSignals(50),

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Footer } from "@/components/Footer";
 import { DocsHeader } from "@/components/docs/DocsHeader";
 import { DocsSidebar } from "@/components/docs/DocsSidebar";
 
@@ -16,8 +17,9 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto py-10 lg:block">
           <DocsSidebar />
         </aside>
-        <main className="min-w-0 flex-1 py-12 pb-32">{children}</main>
+        <main className="min-w-0 flex-1 py-12 pb-24">{children}</main>
       </div>
+      <Footer />
     </>
   );
 }

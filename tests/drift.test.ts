@@ -10,6 +10,7 @@ const snapshot = (overrides: Partial<HealthSnapshot> = {}): HealthSnapshot => ({
   schemaConformance: 1,
   yieldRatio: 1,
   score: 100,
+  runOk: true,
   fields: [{ field: "price", fillRate: 1, absent: false }],
   ...overrides,
 });
@@ -22,6 +23,17 @@ const baseline = (fillRates: Record<string, number>, rowCount = 50): Baseline =>
 });
 
 describe("detectDrift", () => {
+  it("treats a run that never completed as unreachable, not as drift", () => {
+    // Every field looks absent after a timeout, which is indistinguishable from a
+    // total site rewrite. Healing that would spend a cycle with no DOM to work from.
+    const verdict = detectDrift(snapshot({ runOk: false, score: 0, coverage: 0 }));
+
+    expect(verdict.severity).toBe("unreachable");
+    expect(verdict.shouldHeal).toBe(false);
+    expect(verdict.missingFields).toEqual([]);
+    expect(verdict.evidence.join(" ")).toMatch(/transport failure/i);
+  });
+
   it("reports healthy when nothing regressed", () => {
     const verdict = detectDrift(snapshot(), baseline({ price: 1 }));
     expect(verdict.severity).toBe("healthy");

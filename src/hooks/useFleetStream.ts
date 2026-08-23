@@ -22,29 +22,35 @@ export function useFleetStream(): { state: FleetState | undefined; connected: bo
     fetch("/api/state")
       .then((response) => response.json())
       .then((initial: FleetState) => {
-        if (!cancelled) setState(initial);
+        if (cancelled) return;
+        setState(initial);
+
+        // A snapshot build has nothing to stream, and a serverless platform would
+        // terminate the connection anyway. Subscribing only when the data is live
+        // keeps the status indicator honest instead of showing a broken feed.
+        if (initial.readOnly) return;
+
+        const source = new EventSource("/api/stream");
+        sourceRef.current = source;
+
+        source.onopen = () => setConnected(true);
+        source.onerror = () => setConnected(false);
+        source.onmessage = (event) => {
+          try {
+            setState(JSON.parse(event.data) as FleetState);
+            setConnected(true);
+          } catch {
+            // Ignore a malformed frame rather than dropping the subscription.
+          }
+        };
       })
       .catch(() => {
-        // The stream is the source of truth; a failed prime is not fatal.
+        // Nothing to render without state; the status indicator shows offline.
       });
-
-    const source = new EventSource("/api/stream");
-    sourceRef.current = source;
-
-    source.onopen = () => setConnected(true);
-    source.onerror = () => setConnected(false);
-    source.onmessage = (event) => {
-      try {
-        setState(JSON.parse(event.data) as FleetState);
-        setConnected(true);
-      } catch {
-        // Ignore a malformed frame rather than dropping the subscription.
-      }
-    };
 
     return () => {
       cancelled = true;
-      source.close();
+      sourceRef.current?.close();
     };
   }, []);
 

@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS signals (
   collector_slug TEXT NOT NULL REFERENCES collectors(slug),
   detected_at    TEXT NOT NULL,
   company        TEXT NOT NULL,
+  fingerprint    TEXT NOT NULL DEFAULT '',
   kind           TEXT NOT NULL,
   headline       TEXT NOT NULL,
   intent         INTEGER NOT NULL,
@@ -66,8 +67,10 @@ CREATE TABLE IF NOT EXISTS signals (
   source_url     TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_signals_intent ON signals(intent DESC, detected_at DESC);
+-- Identity is the fingerprint, never the phrasing. Keying on headline let the
+-- same openings re-enter as new signals whenever the sample title changed.
 CREATE UNIQUE INDEX IF NOT EXISTS idx_signals_dedupe
-  ON signals(collector_slug, company, headline);
+  ON signals(fingerprint);
 
 -- Append-only activity log driving the live console in the UI.
 CREATE TABLE IF NOT EXISTS events (

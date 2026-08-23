@@ -148,6 +148,7 @@ export function computeHealth(
     schemaConformance,
     yieldRatio,
     score,
+    runOk: run.ok,
     fields,
   };
 }

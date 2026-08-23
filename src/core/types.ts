@@ -67,11 +67,22 @@ export interface HealthSnapshot {
   yieldRatio: number;
   /** Weighted composite, 0..100. The single number on the dial. */
   score: number;
+  /**
+   * Whether the run completed at all. A failed request and a broken selector both
+   * produce zero usable fields, but only one of them can be repaired by a heal.
+   */
+  runOk: boolean;
   fields: FieldStat[];
 }
 
 /** What the sentinel concluded about a run, and why. */
-export type DriftSeverity = "healthy" | "degraded" | "critical" | "schema_gap";
+export type DriftSeverity =
+  | "healthy"
+  | "degraded"
+  | "critical"
+  | "schema_gap"
+  /** The run never completed, so there is no output to diagnose. */
+  | "unreachable";
 
 export interface DriftVerdict {
   severity: DriftSeverity;
@@ -130,6 +141,11 @@ export interface Signal {
   collectorSlug: string;
   detectedAt: string;
   company: string;
+  /**
+   * Stable identity derived from what was observed, not how it was worded.
+   * Re-observing the same openings must not create a second signal.
+   */
+  fingerprint: string;
   kind: SourceKind;
   /** Short description of what changed. */
   headline: string;

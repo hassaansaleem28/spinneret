@@ -23,12 +23,21 @@ interface Props {
   member: FleetMember;
   selected: boolean;
   busy: boolean;
+  readOnly: boolean;
   onSelect: () => void;
   onObserve: () => void;
   onHeal: () => void;
 }
 
-export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal }: Props) {
+export function VitalCard({
+  member,
+  selected,
+  busy,
+  readOnly,
+  onSelect,
+  onObserve,
+  onHeal,
+}: Props) {
   const tone = vitalTone(member.score);
   const colour = TONE_COLOR[tone];
   const needsHeal = member.severity !== "healthy" && member.severity !== "unknown";
@@ -150,7 +159,7 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
           <Button
             variant="outline"
             size="sm"
-            disabled={busy}
+            disabled={busy || readOnly}
             onClick={(event) => {
               event.stopPropagation();
               onObserve();
@@ -165,7 +174,7 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
               render={
                 <Button
                   size="sm"
-                  disabled={busy || !needsHeal}
+                  disabled={busy || readOnly || !needsHeal}
                   onClick={(event) => {
                     event.stopPropagation();
                     onHeal();
@@ -178,9 +187,11 @@ export function VitalCard({ member, selected, busy, onSelect, onObserve, onHeal 
               }
             />
             <TooltipContent>
-              {needsHeal
-                ? "Compose a repair prompt from this collector's telemetry"
-                : "Nothing to repair. This collector is meeting its contract"}
+              {readOnly
+                ? "Unavailable on the hosted snapshot. Heals run locally against Bright Data."
+                : needsHeal
+                  ? "Compose a repair prompt from this collector's telemetry"
+                  : "Nothing to repair. This collector is meeting its contract"}
             </TooltipContent>
           </Tooltip>
         </div>

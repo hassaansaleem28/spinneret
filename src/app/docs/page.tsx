@@ -134,6 +134,16 @@ npm run spinneret -- approve hiring-signals 1 # approve, re-run, record the delt
         <HealLoopDiagram />
         <H3>When Spinneret refuses to heal</H3>
         <P>
+          There are two cases, and both are deliberate.
+        </P>
+        <P>
+          <strong className="text-ink">A run that never completed.</strong> If the
+          request timed out or was rate limited, nothing came back. Every field looks
+          absent, which is indistinguishable from a site that rewrote itself
+          completely. Healing that would burn a cycle and give the healing AI no live
+          page to work from. Transport failure is not drift.
+        </P>
+        <P>
           A collector that is merely degraded, with no specific field identified as
           the cause, is left alone on purpose. An unfocused prompt such as{" "}
           <Code>the scraper seems wrong</Code> tends to make a working scraper worse,
@@ -206,6 +216,7 @@ npm run spinneret -- approve hiring-signals 1 # approve, re-run, record the delt
             ["critical", "Composite score below 55. Always heals.", "Something substantial stopped working."],
             ["degraded", "Score below 80, or any field regressed against baseline.", "Heals only if a specific field was identified."],
             ["healthy", "Everything within tolerance.", "No action."],
+            ["unreachable", "The run never completed. Never heals.", "A timeout or rate limit returns nothing, which looks identical to a total site rewrite. There is no DOM to repair against, so healing would spend a cycle blind."],
           ].map(([level, rule, why]) => (
             <div key={level} className="rounded-lg border border-line bg-surface-2 p-3.5">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

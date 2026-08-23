@@ -1,5 +1,6 @@
 import { findCollector } from "@/config/collectors";
 import * as repo from "@/db/repositories";
+import { isReadOnly, READ_ONLY_REASON } from "@/lib/runtime";
 import { tick } from "./scheduler";
 import { approveAndVerify, heal, observe } from "./sentinel";
 
@@ -22,6 +23,8 @@ export interface JobAccepted {
 }
 
 export function startJob(slug: string, kind: JobKind, healId?: number): JobAccepted {
+  if (isReadOnly()) return { accepted: false, reason: READ_ONLY_REASON };
+
   const collector = findCollector(slug);
   if (!collector) return { accepted: false, reason: `Unknown collector "${slug}"` };
 
@@ -72,6 +75,7 @@ export function isSweeping(): boolean {
  * scheduled behaviour, not a second implementation of it.
  */
 export function startSweep(): JobAccepted {
+  if (isReadOnly()) return { accepted: false, reason: READ_ONLY_REASON };
   if (sweeping) return { accepted: false, reason: "A sweep is already running" };
   sweeping = true;
 

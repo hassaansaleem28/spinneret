@@ -37,10 +37,11 @@ interface Props {
   fleetHealth: number;
   connected: boolean;
   sweeping: boolean;
+  readOnly: boolean;
   onSweep: () => void;
 }
 
-export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
+export function Navbar({ fleetHealth, connected, sweeping, readOnly, onSweep }: Props) {
   const tone = vitalTone(fleetHealth);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -101,34 +102,62 @@ export function Navbar({ fleetHealth, connected, sweeping, onSweep }: Props) {
             </TooltipContent>
           </Tooltip>
 
-          {/* Stream status */}
-          <div className="flex items-center gap-2" aria-live="polite">
-            <span className="relative flex size-2">
-              {connected && (
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-vital-good opacity-60" />
-              )}
-              <span
-                className={`relative inline-flex size-2 rounded-full ${
-                  connected ? "bg-vital-good" : "bg-vital-bad"
-                }`}
-              />
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
-              {connected ? "Live" : "Offline"}
-            </span>
-          </div>
+          {/* Stream status. A snapshot build says so rather than claiming to be live. */}
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <div className="flex items-center gap-2" aria-live="polite">
+                  <span className="relative flex size-2">
+                    {connected && !readOnly && (
+                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-vital-good opacity-60" />
+                    )}
+                    <span
+                      className={`relative inline-flex size-2 rounded-full ${
+                        readOnly
+                          ? "bg-silk"
+                          : connected
+                            ? "bg-vital-good"
+                            : "bg-vital-bad"
+                      }`}
+                    />
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
+                    {readOnly ? "Snapshot" : connected ? "Live" : "Offline"}
+                  </span>
+                </div>
+              }
+            />
+            <TooltipContent>
+              {readOnly
+                ? "Showing recorded data from a real run. Collectors and heals run locally against Bright Data."
+                : connected
+                  ? "Streaming live updates every 2 seconds"
+                  : "Not connected to the event stream"}
+            </TooltipContent>
+          </Tooltip>
 
           <ThemeToggle />
 
-          <Button
-            size="sm"
-            onClick={onSweep}
-            disabled={sweeping}
-            className="gap-1.5 font-medium"
-          >
-            <Radio className="size-3.5" aria-hidden="true" />
-            {sweeping ? "Sweeping…" : "Run Sweep"}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="sm"
+                  onClick={onSweep}
+                  disabled={sweeping || readOnly}
+                  className="gap-1.5 font-medium"
+                >
+                  <Radio className="size-3.5" aria-hidden="true" />
+                  {sweeping ? "Sweeping…" : "Run Sweep"}
+                </Button>
+              }
+            />
+            <TooltipContent>
+              {readOnly
+                ? "Unavailable on the hosted snapshot. Run npm run dev locally to sweep the fleet."
+                : "Observe every collector and heal any that need it"}
+            </TooltipContent>
+          </Tooltip>
 
           {/* The desktop links collapse below md, so mobile gets the same
               destinations rather than being left to scroll and hope. */}

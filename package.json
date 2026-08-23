@@ -9,7 +9,8 @@
     "lint": "eslint",
     "spinneret": "tsx --env-file=.env.local scripts/spinneret.ts",
     "test": "vitest run",
-    "watch": "tsx --env-file=.env.local scripts/watch.ts"
+    "watch": "tsx --env-file=.env.local scripts/watch.ts",
+    "snapshot": "tsx --env-file=.env.local scripts/snapshot.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

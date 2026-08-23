@@ -37,6 +37,24 @@ export function detectDrift(
   snapshot: HealthSnapshot,
   baseline?: Baseline,
 ): DriftVerdict {
+  // A run that never completed tells us nothing about the page. Every field looks
+  // absent, which is indistinguishable from a total rewrite of the site, so the
+  // naive reading is "everything broke, heal it". That would spend a heal cycle on
+  // what is usually a timeout or a rate limit, and hand the healing AI no DOM to
+  // work from. Transport failure is not drift, and it is not repairable by a heal.
+  if (!snapshot.runOk) {
+    return {
+      severity: "unreachable",
+      evidence: [
+        "The collector run did not complete, so no output was returned to diagnose. " +
+          "This is a transport failure rather than drift, and a heal cannot repair it.",
+      ],
+      regressedFields: [],
+      missingFields: [],
+      shouldHeal: false,
+    };
+  }
+
   const evidence: string[] = [];
   const regressedFields: FieldRegression[] = [];
 

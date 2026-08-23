@@ -31,6 +31,7 @@ export function severityLabel(severity: string): string {
     case "degraded": return "degraded";
     case "critical": return "critical";
     case "schema_gap": return "schema gap";
+    case "unreachable": return "unreachable";
     default: return "no data";
   }
 }

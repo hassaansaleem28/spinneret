@@ -316,6 +316,7 @@ export function deriveSignals(
       detectedAt,
       company,
       kind: collector.kind,
+      fingerprint: signalFingerprint(collector.slug, company, titles),
       headline: buildHeadline(collector.kind, companyRows.length, titles),
       intent: clampScore(intent),
       rationale,
@@ -346,7 +347,8 @@ export function truncateTitle(title: string, maxChars = HEADLINE_MAX_CHARS): str
 }
 
 function buildHeadline(kind: SourceKind, count: number, titles: string[]): string {
-  const sample = truncateTitle(titles[0] ?? "role");
+  // Sorted, so the sample shown does not change just because row order did.
+  const sample = truncateTitle([...titles].sort()[0] ?? "role");
   switch (kind) {
     case "hiring":
       return count > 1
@@ -359,4 +361,29 @@ function buildHeadline(kind: SourceKind, count: number, titles: string[]): strin
     case "pricing":
       return `Pricing page changed: ${sample}`;
   }
+}
+
+/**
+ * Stable identity for a signal.
+ *
+ * Duplicates were slipping through because the dedupe key included the headline,
+ * and the headline embeds a sample job title. Row order varies between runs, so
+ * the same four openings produced a different sample each time and looked like
+ * three separate signals.
+ *
+ * The fingerprint is built from what was actually observed rather than how it was
+ * phrased: the collector, the company, and the sorted set of titles. Re-observing
+ * the same openings is therefore silent, while a genuinely new posting changes the
+ * set and produces a new signal, which is exactly the behaviour the product needs.
+ */
+export function signalFingerprint(
+  collectorSlug: string,
+  company: string,
+  titles: string[],
+): string {
+  const normalized = [...new Set(titles.map((title) => title.trim().toLowerCase()))]
+    .filter(Boolean)
+    .sort();
+
+  return [collectorSlug, company.trim().toLowerCase(), normalized.join("|")].join("::");
 }

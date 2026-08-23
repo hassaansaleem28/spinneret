@@ -151,7 +151,7 @@ npm run spinneret -- heal hiring-signals      # compose prompt from telemetry, d
 npm run spinneret -- approve hiring-signals 1 # approve, re-run, record before/after
 npm run spinneret -- cycle hiring-signals     # the whole loop, unattended
 npm run spinneret -- status                   # fleet + heal ledger
-npm test                                      # 44 unit tests over core/
+npm test                                      # 57 unit tests over core/
 ```
 
 ### Running it on a schedule
@@ -180,6 +180,31 @@ an unfocused heal prompt tends to make a working scraper worse.
 
 ---
 
+## Deployment
+
+The hosted build is a **showcase, not a control plane**, and it says so in the header.
+
+Two constraints make that necessary. A serverless filesystem is read-only, so SQLite
+cannot be written. And a heal takes five to twenty-five minutes and shells out to the
+Bright Data CLI, which is far outside any request lifetime. Rather than ship buttons
+that fail, the deployed build serves a committed snapshot of a real run and disables
+the actions with an explanation.
+
+```bash
+npm run snapshot   # capture the live database into src/data/snapshot.json
+git commit -am "chore: refresh snapshot"
+git push           # Vercel deploys on push
+```
+
+The snapshot is plain JSON rather than the SQLite file itself, because `better-sqlite3`
+is a native addon and a failed native build on the host would take the whole deployment
+down. The deployed bundle touches no native module at request time.
+
+Set `SPINNERET_READONLY=true` to reproduce the hosted behaviour locally, or
+`SPINNERET_READONLY=false` to force live mode anywhere.
+
+---
+
 ## How the health score works
 
 | Component | Weight | Meaning |
@@ -188,7 +213,13 @@ an unfocused heal prompt tends to make a working scraper worse.
 | Schema conformance | 0.30 | Fraction of contracted fields present as keys |
 | Yield | 0.20 | Row count against the rolling baseline |
 
-Two details that matter:
+Three details that matter:
+
+- **A failed run is not drift.** When a request times out or is rate limited, every
+  field looks absent, which is indistinguishable from a total rewrite of the site. The
+  naive reading is "everything broke, heal it", which spends a heal cycle and hands the
+  healing AI no DOM to work from. Runs that never completed are classified `unreachable`
+  and explicitly excluded from healing.
 
 - **Baselines use the median, not the mean.** One catastrophic run would drag a mean low
   enough to mask the next real break.

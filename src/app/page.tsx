@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CompanyDrawer } from "@/components/CompanyDrawer";
 import { Console } from "@/components/Console";
+import { Footer } from "@/components/Footer";
 import { HealLedger } from "@/components/HealLedger";
 import { Navbar } from "@/components/Navbar";
 import { SignalBoard } from "@/components/SignalBoard";
@@ -56,6 +57,7 @@ export default function Dashboard() {
 
   const summary = state?.summary;
   const fleetHealth = summary?.fleetHealth ?? 0;
+  const readOnly = state?.readOnly ?? false;
 
   const visibleSignals = useMemo(() => {
     if (!state) return [];
@@ -70,6 +72,7 @@ export default function Dashboard() {
         fleetHealth={fleetHealth}
         connected={connected}
         sweeping={sweeping}
+        readOnly={readOnly}
         onSweep={onSweep}
       />
 
@@ -156,6 +159,7 @@ export default function Dashboard() {
                   member={member}
                   selected={selected === member.collector.slug}
                   busy={busySlug === member.collector.slug}
+                  readOnly={readOnly}
                   onSelect={() =>
                     setSelected(
                       member.collector.slug === selected ? undefined : member.collector.slug,
@@ -216,10 +220,13 @@ export default function Dashboard() {
           <HealLedger
             heals={state?.heals ?? []}
             busySlug={busySlug}
+            readOnly={readOnly}
             onApprove={(slug, healId) => dispatch("approve", { slug, healId })}
           />
         </Section>
       </main>
+
+      <Footer />
 
       <CompanyDrawer
         company={openCompany}

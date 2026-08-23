@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { deriveSignals, resolveField, truncateTitle } from "@/core/signals";
+import {
+  deriveSignals,
+  resolveField,
+  signalFingerprint,
+  truncateTitle,
+} from "@/core/signals";
 import type { Collector } from "@/core/types";
 
 const collector: Collector = {
@@ -214,5 +219,54 @@ describe("truncateTitle", () => {
   it("falls back to a hard clip when there is no usable word boundary", () => {
     const result = truncateTitle("a".repeat(200), 20);
     expect(result).toBe(`${"a".repeat(20)}…`);
+  });
+});
+
+describe("signalFingerprint", () => {
+  it("is stable regardless of the order roles were scraped in", () => {
+    // This is the bug it exists to prevent: row order varied between runs, so the
+    // same four openings looked like three separate signals.
+    const a = signalFingerprint("jobs", "Tebra", ["AE, Growth", "AE, Patient Experience"]);
+    const b = signalFingerprint("jobs", "Tebra", ["AE, Patient Experience", "AE, Growth"]);
+    expect(a).toBe(b);
+  });
+
+  it("ignores casing and surrounding whitespace", () => {
+    expect(signalFingerprint("jobs", "Tebra", ["  Account Executive "])).toBe(
+      signalFingerprint("jobs", "tebra", ["account executive"]),
+    );
+  });
+
+  it("collapses a repeated title rather than counting it twice", () => {
+    expect(signalFingerprint("jobs", "Acme", ["AE", "AE"])).toBe(
+      signalFingerprint("jobs", "Acme", ["AE"]),
+    );
+  });
+
+  it("changes when a genuinely new role appears", () => {
+    // A new posting must produce a new signal, or the product stops reporting change.
+    const before = signalFingerprint("jobs", "Acme", ["AE"]);
+    const after = signalFingerprint("jobs", "Acme", ["AE", "Head of Sales"]);
+    expect(after).not.toBe(before);
+  });
+
+  it("separates the same company observed through different collectors", () => {
+    expect(signalFingerprint("jobs", "Acme", ["AE"])).not.toBe(
+      signalFingerprint("directory", "Acme", ["AE"]),
+    );
+  });
+});
+
+describe("headline stability", () => {
+  it("does not change just because rows arrived in a different order", () => {
+    const rows = [
+      { company_name: "Tebra", job_title: "AE, Growth" },
+      { company_name: "Tebra", job_title: "AE, Patient Experience" },
+    ];
+    const [first] = deriveSignals(collector, rows, new Set(["Tebra"]), at);
+    const [second] = deriveSignals(collector, [...rows].reverse(), new Set(["Tebra"]), at);
+
+    expect(first.headline).toBe(second.headline);
+    expect(first.fingerprint).toBe(second.fingerprint);
   });
 });

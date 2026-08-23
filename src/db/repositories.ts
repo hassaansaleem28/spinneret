@@ -205,6 +205,9 @@ function toHealthRow(row: Record<string, unknown>): HealthRow {
     schemaConformance: row.schema_conformance as number,
     yieldRatio: row.yield_ratio as number,
     score: row.score as number,
+    // Persisted before runOk existed as a column; severity is the reliable
+    // record of whether the run completed.
+    runOk: (row.severity as string) !== "unreachable",
     fields: parse(row.fields as string, []),
     severity: row.severity as string,
     evidence: parse(row.evidence as string, []),
@@ -275,8 +278,8 @@ export function listHeals(limit = 25): HealAttempt[] {
 export function insertSignals(signals: Omit<Signal, "id">[]): number {
   const statement = getDb().prepare(
     `INSERT OR IGNORE INTO signals
-       (collector_slug, detected_at, company, kind, headline, intent, rationale, source_url)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+       (collector_slug, detected_at, company, fingerprint, kind, headline, intent, rationale, source_url)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   );
   const insertMany = getDb().transaction((batch: Omit<Signal, "id">[]) => {
     let inserted = 0;
@@ -285,6 +288,7 @@ export function insertSignals(signals: Omit<Signal, "id">[]): number {
         signal.collectorSlug,
         signal.detectedAt,
         signal.company,
+        signal.fingerprint,
         signal.kind,
         signal.headline,
         signal.intent,
@@ -308,6 +312,7 @@ export function listSignals(limit = 60): Signal[] {
     collectorSlug: row.collector_slug as string,
     detectedAt: row.detected_at as string,
     company: row.company as string,
+    fingerprint: (row.fingerprint as string) ?? "",
     kind: row.kind as SourceKind,
     headline: row.headline as string,
     intent: row.intent as number,

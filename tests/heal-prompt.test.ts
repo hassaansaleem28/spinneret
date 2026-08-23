@@ -24,6 +24,7 @@ const snapshot: HealthSnapshot = {
   schemaConformance: 0.66,
   yieldRatio: 1,
   score: 45,
+  runOk: true,
   fields: [
     { field: "company_name", fillRate: 1, absent: false },
     { field: "job_title", fillRate: 0.02, absent: false },

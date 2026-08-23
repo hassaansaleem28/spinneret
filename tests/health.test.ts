@@ -94,3 +94,15 @@ describe("computeHealth", () => {
     expect(snapshot.score).toBe(0);
   });
 });
+
+describe("computeHealth carries the run outcome", () => {
+  it("marks a completed run as reachable", () => {
+    expect(computeHealth(run([{ a: "x" }]), ["a"]).runOk).toBe(true);
+  });
+
+  it("marks a failed run as unreachable so drift detection can tell them apart", () => {
+    const snapshot = computeHealth(run([], { ok: false, error: "timeout" }), ["a"]);
+    expect(snapshot.runOk).toBe(false);
+    expect(snapshot.score).toBe(0);
+  });
+});
