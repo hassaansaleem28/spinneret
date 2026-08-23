@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Spinneret">
+  <title>Spinneret</title>
+  <!-- Transparent ground so the mark reads on GitHub's light and dark themes alike. -->
+  <g fill="none" stroke="#F0B429" stroke-linecap="round">
+    <!-- Radial threads -->
+    <g stroke-width="3">
+      <line x1="100" y1="100" x2="100" y2="16"/>
+      <line x1="100" y1="100" x2="159.4" y2="40.6"/>
+      <line x1="100" y1="100" x2="184" y2="100"/>
+      <line x1="100" y1="100" x2="159.4" y2="159.4"/>
+      <line x1="100" y1="100" x2="100" y2="184"/>
+      <line x1="100" y1="100" x2="40.6" y2="159.4"/>
+      <line x1="100" y1="100" x2="16" y2="100"/>
+      <line x1="100" y1="100" x2="40.6" y2="40.6"/>
+    </g>
+    <!-- Capture spiral, drawn as sagging rings the way real orb silk hangs -->
+    <polygon points="100,32 148,52 168,100 148,148 100,168 52,148 32,100 52,52" stroke-width="2" opacity="0.75"/>
+    <polygon points="100,58 130,70 142,100 130,130 100,142 70,130 58,100 70,70" stroke-width="2" opacity="0.55"/>
+  </g>
+  <circle cx="100" cy="100" r="13" fill="#F0B429"/>
+</svg>
